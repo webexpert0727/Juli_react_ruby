@@ -1,0 +1,96 @@
+.leftMenu {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom:0;
+	width: 230px;
+	z-index: 999;
+	background: $light_orange;
+	@include box-shadow (2px 0 30px rgba(0, 0, 0, 0.29));
+	.lmInr { height: 100%}
+}
+.leftuserTop {
+    text-align: center;
+    padding: 40px 15px 20px;
+    height: 170px;
+    color: #fff;
+	position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+	background-color: $orange;
+	h2{ font-size: 18px;margin: 7px 0 0;}
+}
+.mainMenuIcn {
+    position: absolute;
+    top: 20px;
+    background: $orange url(../images/menuicon.png) center center no-repeat;
+    width: 45px;
+    height: 35px;
+	z-index: 5;
+    right: -16px;
+	cursor: pointer;
+	@include border-radius(2px);
+}
+.leftMainMenu {
+    padding: 170px 0 182px;
+    height: 100%;
+	.lmmInr { height: 100%}
+}
+.lutImage {
+    width: 75px;
+    height: 75px;
+    margin: 0 auto;
+	overflow: hidden;
+	@include border-radius(100%);
+	img { display: block}
+}
+.leftMainMenu .mCSB_inside>.mCSB_container { margin: 0}
+.leftMainMenu {
+	 ul {
+		 li {
+			a {
+				display: block;
+				color: #fff;
+				text-decoration: none;
+				font-size: 16px;
+				height: 55px;
+				line-height: 55px;
+				padding: 0 25px;
+				img { vertical-align: sub; margin-right: 8px}
+				&:hover {background-color: $dark_gray}
+				&.active { background-color: $black}
+			}
+		 }
+	 }
+}
+.lmFoot { 
+	text-align: center;
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 10px 30px;
+	background: $light_orange;
+	ul {
+		margin: 5px 0 0;
+		li {
+			display: inline-block;
+			margin: 0 10px;
+			position: relative;
+			a {color: #fff}
+		}	
+	}
+	p{ margin: 10px 0;
+		strong{ font-weight: 600}
+	}
+}
+.lmFoot ul li + li:after {
+    content: "";
+    position: absolute;
+    border-left: 1px solid #fff;
+    height: 15px;
+    left: -11px;
+    top: 3px;
+}

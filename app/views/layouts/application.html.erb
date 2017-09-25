@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title>Equine Office</title>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body class="loRegBody">
+      
+      <!-- Left Menu -->
+      <%-if user_signed_in? %>
+        <%#= render 'layouts/left_panel' %>
+      <%end%>
+      <script type="text/javascript">
+        window.DEFAULT_SETTINGS = {
+          apiUrl: '<%= application_base_url %>',
+          csrfToken: '<%= form_authenticity_token %>',
+          jwt: '<%= jwt_token %>',
+          user: <%= raw current_user.to_json %>
+        };
+      </script>
+<!--     <div class="lrCntnr">
+      <div class="lrcInr">
+        <div class="lrBtns">
+          <div class="topLogo"><%#=image_tag "smlLogo.png", alt:"Logo" %><span>Powered by <strong>Equine Office</strong></span></div>
+          <div class="lrBtnsInr">
+            <div class="lrsb primaryBtn"><a href="login.html">Login</a></div>
+            <div class="lrsb orangeBtn"><a href="register.html">Register</a></div>
+          </div>
+        </div>
+      </div>
+    </div> -->              
+      <!-- <div class="mainView">               -->
+        <div id="root" style="height:100%"></div>
+      <!-- </div> -->
+      <%= javascript_pack_tag 'webpack-bundle' %>
+  </body>
+</html>

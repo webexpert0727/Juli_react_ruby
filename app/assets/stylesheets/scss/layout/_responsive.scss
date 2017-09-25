@@ -1,0 +1,142 @@
+@media (max-width: $break-small-desk) {
+	.rghtHeadTop, .rghtCalCntnr { margin-left: 0; margin-right: 0}	
+	.leftMenu { left: -250px}
+	.mainMenuIcn {right: -64px;top: 17px; @include transform(rotate(180deg))}
+	.closeMenu {
+		.leftMenu { 
+			left: 0;
+			.mainMenuIcn {
+				right: -15px;@include transform(rotate(0deg))	
+			}
+		}	
+	}
+	.rightMain { margin-left: 0; padding-bottom: 0}
+	.rmInr { padding: 0 15px}
+	body, html, .mainView, .rightMain, .rmInr { height: auto}
+	.rightMain footer { position: static; margin-top: 30px}
+	.rghtHeadTop {
+		padding: 15px 0 13px;
+		h1 {font-size: 30px; float: none; width: auto; text-align:center; padding: 0 50px}	
+		.rhtSrch {float: none; width: auto; position: absolute; top: 18px; right: 0}
+	}
+	.rhtSrch > form input[type="text"] { display: none}
+	.rhtSrch > form button { position: static}
+	.mCustomScrollbar, .mCustomScrollbar.mCS_no_scrollbar, .mCustomScrollbar.mCS_touch_action {-ms-touch-action: inherit;touch-action: inherit}
+	.mCSB_inside>.mCSB_container { margin-right: 0} 
+	.mCSB_scrollTools .mCSB_draggerContainer { display: none}
+	.fc-agendaDay-view th.fc-day-header { 
+		span { margin-left: -60px}
+	}
+	.fc-scroller { height: auto !important} 
+	.lrCntnr { 
+		position: fixed; top: 0; left: 0; bottom: 0; right: 0; display: block;
+		.lrcInr {
+			display: block;vertical-align: middle;position: absolute;top: 50%;left: 50%;@include transform(translate(-50%,-50%));
+		}
+	}
+	
+}
+
+@media (max-width: $break-mobile) {
+	.fc .fc-axis, .fc th { padding: 5px;}
+	th.fc-day-header.fc-widget-header { font-weight: 600}
+	.leftMenu{	
+		.lmInr { 
+			max-height: 100%; overflow: auto;
+			.leftuserTop, .lmFoot { position: static;}
+			.leftMainMenu { padding: 10px 0 30px}
+		}
+	}
+	.addLsn {position: static;width: 100%;max-width: inherit; margin: 0 0 20px; 
+		a { @include border-radius(0); @include box-shadow(none)}
+	}
+	.rmInr { padding: 0}
+	.rghtHeadTop { margin-bottom: 0; border: 0}
+	.fc-toolbar .fc-left {  max-width: inherit;  margin: 0 10px}
+	.rghtHeadTop .rhtSrch { right: 10px}
+	.fc-toolbar {
+		.fc-right {float: none;margin: 0 15px}	
+	}
+	.fc-row .fc-content-skeleton td > span, 
+	.fc-row .fc-helper-skeleton td > span { font-size: 17px}
+	.fc-ltr {
+		.fc-axis { background-color: $light_gray; font-weight: 600}	
+	}
+	.fc-unthemed td.fc-today > span.fc-day-number {
+		background: transparent;
+		width: auto;
+		height: auto;
+		color: #222;
+		position: relative
+	}
+	.fc-unthemed td.fc-today > span.fc-day-number:after {
+		content: "";
+		display: block;
+		width: 12px;
+		height: 12px;
+		background: #009a82;
+		position: absolute;
+		bottom: -5px;
+		left: 50%;
+		margin-left: -4px;
+		@include border-radius(100%);
+	}
+	.fc-row .fc-content-skeleton td > span, 
+	.fc-row .fc-helper-skeleton td > span { width: auto; height: auto}
+	
+	
+}
+@media (max-width: $break-mobile-small) {
+	.fc-toolbar {
+		.fc-center {
+			padding: 13px;
+			h2 {font-size: 20px}	
+		}	
+	}
+	.lrCntnr { 
+		.lrcInr {
+			top: 15px;left: 15px; bottom: 15px; right:15px; @include transform(translate(0));
+			.lrBtns { 
+				display: table; height: 100%; width: 100%; padding: 0;
+				.lrBtnsInr { display: table-cell; vertical-align: middle; padding: 150px 25px 25px}
+			}
+		}
+	}
+	
+	.lrCntnr {
+		.lrcInr {
+			.loginCnt { height: 100%}	
+		}	
+	}
+	.lrCntnr {
+		padding: 10px;
+		.lrcInr {
+			.loginCnt { 
+				padding: 15px;
+				.lrDbl {margin: 20px 0}
+				.lgBtn { margin: 20px 0 0}
+			}
+		}	
+	}
+	
+}
+
+@media screen and (max-width: 740px) and (max-height: 610px) {
+	.loRegBody { overflow: visible}
+	.lrCntnr {
+		.lrcInr {
+			.loginCnt { min-height: 315px}	
+		}	
+	}
+	
+	.regWrp {
+		position: static; height:auto; min-height: 100vh;
+		.lrcInr {position: static; height:auto;
+			.loginCnt { 
+				padding: 15px;
+				.lrDbl {margin: 20px 0}
+				.lgBtn { margin: 20px 0 0}
+			}
+		}	
+	}
+}

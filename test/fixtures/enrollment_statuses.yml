@@ -1,0 +1,7 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  enrollment_status_name: MyString
+
+two:
+  enrollment_status_name: MyString

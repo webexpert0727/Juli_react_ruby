@@ -1,0 +1,138 @@
+.loRegBody { overflow: hidden}
+.lrCntnr { 
+    width: 100%;
+    height: 100%;
+    display: table;
+    text-align: center;
+    background: $orange;
+	.lrcInr {
+		display: table-cell;
+		vertical-align: middle;
+		.lrBtns,.loginCnt {
+			background: #fff;
+			width: 600px;
+			position: relative;
+			max-width: 100%;
+			overflow:hidden; 
+			margin: 0 auto;
+			@include box-shadow(0 0 15px rgba(0,0,0,.25));
+			@include border-radius(3px);
+			.lrsb {
+				display: inline-block;
+				margin: 10px;
+				vertical-align: middle;
+				a, button {
+					display: block;
+					text-decoration: none;
+					border: 2px solid;
+					padding: 10px 30px;
+					font-size: 18px;
+					text-align: center;
+					@include border-radius(2px);
+				}
+			}
+			.primaryBtn {
+				a, button {border-color: $dark_blue}	
+			}
+			.orangeBtn {
+				a, button {border-color: $orange}	
+			}
+		}
+		.lrBtns {padding: 220px 15px 120px}
+		.loginCnt { 
+			padding: 20px 25px 30px; text-align: left;
+			h1 { font-size: 25px; margin: 0 0 20px;}
+			.lrInput {
+				input[type="text"], input[type="password"]{
+					    width: 100%;
+						padding: 10px 15px;
+						border: 1px solid $mid_gray;
+						@include border-radius(2px);
+						@include box-shadow(none);
+						&:focus { border-color: $dark_blue}
+				}
+			}
+			.lrInput + .lrInput {margin-top: 15px}
+		}
+	}
+}
+.topLogo {
+    background: $orange;
+    text-align: center;
+    margin: -20px -25px 20px;
+    padding: 25px;
+	img { margin: 0 auto}
+	img, span {display: block; }
+	span { margin-top: 15px;color: #fff;strong { font-weight: 600}}
+}
+.lrBtns {
+	.topLogo {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		margin: 0;
+	}	
+}
+.lrInput {
+	.dropdown-toggle {
+		font-size: 16px;
+		padding: 10px 15px;
+	}	
+	.dropdown-menu>li>a {
+		padding: 4px 15px;
+		font-size: 15px;
+	}
+}
+.lrInput > label { margin-bottom: 6px}
+.lrBtns a {width: 200px;}
+.lgBtn button {width: 160px;}
+.rmbrMe > label {position: relative;padding-left: 25px; cursor: pointer}
+.rmbrMe > label > input[type="checkbox"] { display: none}
+.rmbrMe > label > span {
+    display: block;
+    position: absolute;
+    top: 2px;
+    left: 0;
+    border: 1px solid $mid_gray;
+    width: 18px;
+    height: 18px;
+	@include border-radius(2px);
+}
+
+.rmbrMe > label > input[type="checkbox"]:checked + span {
+	@include box-shadow(0 2px 7px rgba(255, 121, 0, 0.75));
+	background: #fff url(../images/blueTickSml.png) center center no-repeat
+}
+.lrDbl:before, .lrDbl:after { content: ""; display: table; clear: both}
+.lrDbl {
+    margin: 25px 0;
+	.rmbrMe { float: left}
+	.forgtPass { 
+		float: right;
+		a { color: $orange}
+	}
+}
+.btmTextlgn a { color: $orange}
+.lrCntnr {
+	.lrcInr {
+		.loginCnt {
+			.lgBtn {
+				.lrsb { margin: 0 20px 0 0}	
+			}
+		}
+	}
+}
+
+.btmTextlgn {
+    display: inline-block;
+    vertical-align: middle;
+    color: $mid_gray;
+	padding: 20px 0;
+}
+
+.lgBtn { margin: 20px 0 0}
+
+
+
+

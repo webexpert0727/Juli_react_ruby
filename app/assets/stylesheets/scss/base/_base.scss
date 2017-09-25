@@ -1,0 +1,251 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700');
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {margin: 0;padding: 0;border: 0;font-size: 100%;font: inherit;vertical-align: baseline;}
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {display: block;}
+body {line-height: 1;}
+ol, ul {list-style: none;}
+blockquote, q {quotes: none;}
+blockquote:before, blockquote:after,
+q:before, q:after {content: '';content: none;}
+table {border-collapse: collapse;border-spacing: 0;}
+*,*:before,*:after{-webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;}
+.container{padding-left:15px;padding-right:15px;margin-right: auto;margin-left: auto;}
+.clearfix:after, clearfix:before { content: ""; display: table; clear: both}
+body{font-size: 16px;line-height: 20px;font-family: 'Source Sans Pro', sans-serif; line-height: 1.416; color: $dark_gray}
+
+p { margin: 0 0 10px}
+input, button, a, textarea,
+.bootstrap-select .dropdown-toggle:focus { outline: none !important}
+body, html, .mainView, .rightMain,.rmInr { height: 100%}
+img { max-width: 100%}
+a { @include transition(all 300ms)}
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) { width: 100%}
+.bootstrap-select .btn-default:hover,
+.bootstrap-select .btn-default.active.focus, 
+.bootstrap-select .btn-default.active:focus, 
+.bootstrap-select .btn-default.active:hover, 
+.bootstrap-select .btn-default:active.focus, 
+.bootstrap-select .btn-default:active:focus, 
+.bootstrap-select .btn-default:active:hover, 
+.bootstrap-select.open>.dropdown-toggle.btn-default.focus, 
+.bootstrap-select.open>.dropdown-toggle.btn-default:focus,  
+.bootstrap-select.open>.dropdown-toggle.btn-default:hover { background-color: #fff}
+
+
+
+/*----------Calendar style -----------*/
+.fc-license-message { display: none !important}
+.fc-time-grid, .fc-time-grid-container { height: auto !important;overflow: visible !important}
+.fc-toolbar .fc-right { float: left}
+.fc-toolbar .fc-left { float: right}
+.fc-toolbar .fc-center {
+    display: block;
+    float: left;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+	margin: 20px 0 0;
+	background: $dark_blue
+}
+.fc-toolbar.fc-header-toolbar { margin-bottom: 0}
+.fc-toolbar .fc-center h2 {
+    float: none;
+    font-size: 24px;
+    color: #fff;
+	display: inline-block;
+	width: 300px;
+	position: relative;
+    z-index: 5;
+}
+.fc th {
+    background: $light_gray;
+    border: 0;
+    padding: 5px 20px;
+    text-align: right;
+    text-transform: uppercase;
+    font-size: 15px;
+	border-bottom-width: 2px;
+	font-weight: 600;
+}
+.fc-time-grid-event .fc-time { font-weight: 700}
+.fc-row .fc-content-skeleton td > span, 
+.fc-row .fc-helper-skeleton td > span {
+    font-size: 20px;
+	width: 50px;
+    height: 50px;
+    padding: 0;
+    text-align: center;
+    line-height: 50px;
+	margin: 7px;
+	@include border-radius(100%);
+
+}
+
+.fc-state-default {
+    border: 1px solid $mid_gray;
+	background: #fff;
+	@include text-shadow(none);
+	@include box-shadow(none);
+}
+.fc-toolbar button {padding: 9px 25px;height: auto; width: auto; text-transform: capitalize; font-size: 16px;} 
+.fc-toolbar .fc-state-active, .fc-toolbar .ui-state-active { background: $black; color: #fff}
+.fc-unthemed td.fc-today > span.fc-day-number { background:  $black; color: #fff   }
+.fc-day-grid-event,
+.fc-time-grid .fc-event,
+.fc-event, .fc-event-dot,
+.fc-row .fc-content-skeleton tbody tr .fc-event  {
+    margin: 1px 0 !important;
+    padding: 3px 5px;
+    font-size: 16px;
+    border: 0;
+	color: $black;
+	border-width: 3px 3px 3px 8px; 
+	border-style: solid;
+	@include border-radius(0);
+}
+.fc-event .fc-bg { opacity: 0}
+hr.fc-divider { border-width: 1px 0; padding: 0}
+.fc-time-grid .fc-event { border-color: $light_pink; border-left-color: $redish_pink}
+
+.fc-unthemed td.fc-today { background: #f9f9f9; border: 1px solid #ddd}
+.fc-day-grid-event:hover { color: $black}
+.fc-event, .fc-event-dot,
+.fc-row .fc-content-skeleton tbody tr .fc-event { background-color: $light_pink; border-color: $light_pink; border-left-color: $redish_pink}
+.fc td, .fc th {border-width: 1px}
+.fc-scroller { overflow: visible !important}
+.fc-row .fc-content-skeleton tbody tr + tr .fc-event,
+.fc-row .fc-content-skeleton tbody tr + tr + tr + tr .fc-event,
+.fc-time-grid .fc-event + .fc-event  { background-color: $light_blue; border-color: $light_blue; border-left-color: $dark_blue}
+.fc-row .fc-content-skeleton tbody tr + tr .fc-event,
+.fc-time-grid .fc-event + .fc-event + .fc-event { background-color: $light_blue; border-color: $light_blue; border-left-color: $dark_blue}
+.fc-row .fc-content-skeleton tbody tr + tr + tr .fc-event,
+.fc-time-grid .fc-event + .fc-event + .fc-event + .fc-event { background-color: $light_green; border-color: $light_green; border-left-color: $dark_green}
+
+.fc-event, .fc-event-dot:hover, 
+.fc-row .fc-content-skeleton tbody tr .fc-event:hover { border-color: $redish_pink}
+.fc-row .fc-content-skeleton tbody tr + tr .fc-event:hover, 
+.fc-row .fc-content-skeleton tbody tr + tr + tr + tr .fc-event:hover, 
+.fc-time-grid .fc-event + .fc-event:hover { border-color: $dark_blue}
+.fc-row .fc-content-skeleton tbody tr + tr + tr .fc-event:hover,
+.fc-time-grid .fc-event + .fc-event + .fc-event + .fc-event:hover { border-color: $dark_green}
+.fc-toolbar {
+	.fc-left {
+		.fc-icon { display: none}
+	}	
+}
+.fc-toolbar {
+	.fc-left button {
+		width: 35px;
+		padding: 0;
+		height: 35px;
+		border: 1px solid #fff;
+		color: #fff;
+		@include border-radius(100%);
+	}	
+}
+.fc-agendaDay-view th.fc-day-header { 
+	text-align: center;
+	span { margin-left: -150px; display: inline-block}
+}
+
+.fc-toolbar .fc-left .fc-today-button { display: none}
+.fc-toolbar {
+	.fc-left {
+		button.fc-prev-button { float: left; background: rgba(255, 255, 255, 0.47) url(../images/calLeftIcn.png) center center no-repeat;
+			&:hover { background-color: $dark_blue}
+		}
+	}	
+}
+.fc-toolbar {
+	.fc-left {
+		button.fc-next-button { float: right; background: rgba(255, 255, 255, 0.47) url(../images/calRghtIcn.png) center center no-repeat;
+			&:hover { background-color: $dark_blue}
+		}	
+	}	
+}
+.fc-toolbar .fc-left { position:absolute; top: 71px; left: 0; right: 0; max-width: 420px; margin: 0 auto}
+.fc-toolbar .fc-left .fc-button-group { width: 100%}
+.fc .fc-axis { padding: 5px 15px}
+.fc-ltr .fc-axis { text-align: left; text-transform: uppercase; font-weight: 600;}
+#calendar { position: relative; z-index: 0}
+
+.leftMenu,.rightMain,footer,.mainMenuIcn {@include transition(all 300ms);}	
+	
+
+.mCustomScrollBox { height: auto}
+
+.closeMenu {
+	.leftMenu {left: -230px; @include transition(all 300ms);
+		.mainMenuIcn{right: -30px;@include transform(rotate(-180deg))}
+	}
+	.rightMain {margin-left: 0;@include transition(all 300ms); 
+		footer { left: 0;@include transition(all 300ms);}
+	}	
+	
+}
+
+
+
+
+/*-------------------- Calendar --------------------*/
+.react-datepicker {
+    border: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 16px;
+	@inculde border-radius(3px);
+    
+}
+.react-datepicker-popper[data-placement^="top"] .react-datepicker {@include box-shadow(0 2px 10px rgba(0, 0, 0, 0.23));}
+
+.react-datepicker__day-name, 
+.react-datepicker__day { width: 35px;height: 35px;line-height: 35px}
+.react-datepicker__day--selected, 
+.react-datepicker__day--in-selecting-range, 
+.react-datepicker__day--in-range, 
+.react-datepicker__day-name, 
+.react-datepicker__day, 
+.react-datepicker__day:hover { @inculde border-radius(100%)}
+.react-datepicker__header { border: 0;background: #fff; font-weight: 600}
+.react-datepicker__current-month { font-size: 20px;font-weight: 500; padding: 7px 0}
+.react-datepicker__navigation {
+    width: 35px;
+    padding: 0;
+    height: 35px;
+    border: 1px solid $dark_gray;
+    color: #fff;
+    @inculde border-radius(100%)
+}
+.react-datepicker__navigation--previous {background: #cdcdcd url(images/calLeftIcnDark.png) center center no-repeat}
+.react-datepicker__navigation--next {background: #cdcdcd url(images/calRghtIcnDark.png) center center no-repeat}
+.react-datepicker__navigation--previous:hover,
+.react-datepicker__navigation--previous:hover { border-color: $dark_gray;background-color: $mid_gray;}
+.react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle {border-bottom-color: #fff}
+.react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle::before {border-bottom-color: #ddd}
+
+
+.rc-time-picker-panel-input, .rc-time-picker-panel-select li {
+	font-size: 18px; 
+	-webkit-box-sizing: border-box; 
+	-moz-box-sizing: border-box; 
+	-ms-box-sizing: border-box; 
+	-o-box-sizing: border-box; 
+		box-sizing: border-box;
+}
+.rc-time-picker-panel-input {padding: 0 9px}
+li.rc-time-picker-panel-select-option-selected,
+li.rc-time-picker-panel-select-option-selected:hover {background: $dark_gray; color: #fff}
+.rc-time-picker-panel-select li:hover { background: $gray}

@@ -1,0 +1,446 @@
+.mainView { background: #fff}
+.rghtHeadTop, .rghtCalCntnr { margin: 0 3%}
+.rightMain { margin-left: 230px; padding-bottom:50px}
+.rmInr { overflow: auto;padding: 20px 0 10px 30px}
+.rghtHeadTop h1 {
+    font-size: 34px;
+    text-transform: capitalize;
+    float: left;
+    width: 70%;
+}
+.rhtSrch { float: left;width: 30%}
+.rhtSrch > form {
+    position: relative;
+}
+.rhtSrch > form input[type="text"] {
+    width: 100%;
+    padding: 12px 20px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+	@include border-radius(5px);
+}
+.rhtSrch > form button {
+    border: 1px solid #0098bd;
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    top: 6px;
+    right: 4px;
+    z-index: 1;
+    cursor: pointer;
+	@include border-radius(100%);
+	background: #fff url(../images/srchIcn.png) center center no-repeat;
+	&:hover { background-color: $mid_blue}
+}
+
+.rightMain {
+	footer {position: fixed; bottom:0; left:230px; right: 0; text-align:center;
+	.footTop {
+		height: 30px; position: relative; margin: 0 8%;
+		&:before { content: ""; position:absolute; left: 0; bottom: 15px; width: 46%; height: 2px; background-color: $gray; z-index:0; @include border-radius(2px)}
+		&:after { content: ""; position:absolute; right: 0; bottom: 15px; width: 46%; height: 2px; background-color: $gray; z-index:0; @include border-radius(2px)}
+		span { width: 40px; height: 40px; position: relative;z-index:1; background: #fff; display: inline-block; @include border-radius(60px) }
+	}
+	.footBtm { background:$gray; height: 15px}
+	}	
+}
+.rghtHeadTop {padding: 20px 0 13px;border-bottom: 3px solid $gray; margin-bottom: 15px}
+.rccInr { position: relative}
+.addLsn {
+    position: absolute;
+    right: 0;
+	z-index: 55;
+	width: 30%;
+	max-width: 300px;
+	a {
+		display: block;
+		text-decoration: none;
+		color: #fff;
+		background: $orange;
+		border: 2px solid $orange;
+		padding: 8px 30px;
+		font-size: 16px;
+		text-align:center;	
+		@include border-radius(2px);
+		@include box-shadow(2px 5px 15px rgba(0,0,0,.2));
+		&:hover {background: #fff;color: $orange;}
+	}
+}
+
+.addLsnPop {
+    width: 550px;
+	margin: 50px auto;
+    z-index: 55;
+	border-left: 1px solid $mid_gray;
+	@include border-radius(4px);
+    @include box-shadow(3px 3px 10px rgba(0, 0, 0, 0.3));
+	.popHead {
+		padding: 10px 60px 10px 50px;
+		color: #fff;
+		background: #27a8c7; 
+		position: relative;
+		z-index: 0;
+		@include box-shadow(0 5px 10px rgba(0,0,0,.2));
+		@include border-radius(4px 4px 0 0);
+		background: -moz-linear-gradient(top, #27a8c7 0%, #61c0d6 100%);
+		background: -webkit-linear-gradient(top, #27a8c7 0%,#61c0d6 100%);
+		background: linear-gradient(to bottom, #27a8c7 0%,#61c0d6 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#27a8c7', endColorstr='#61c0d6',GradientType=0 );
+		h2 { font-size: 24px; font-weight: normal}
+	}
+}
+.popBody { 
+	padding: 25px 50px;background: #fff;@include border-radius(0 0 4px 4px);
+	.snglFld input,.bootstrap-select>.dropdown-toggle {width: 100%;padding: 8px 15px;font-size: 16px; height: 40px;border: 1px solid $mid_gray;@include border-radius(2px)}
+}
+
+.slct_cnt > label,.snglFld > label,
+.paidUnpaidChk > label, .lnText > label { float: left; width: 100%; font-weight: 600; margin-bottom: 5px;}	
+
+.dblSelect .snglFld { float: left; width: 70%}
+.dblSelect .snglFld + .snglFld { width: 30%; padding-left: 15px}
+span.bs-caret {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    bottom: 2px;
+    width: 28px;
+    background: $dark_blue url(../images/downtArw.png) center center no-repeat;
+	@include border-radius(2px);
+}
+.snglFld input:focus, .lnText textarea:focus,
+.bootstrap-select.open > .dropdown-toggle, 
+.bootstrap-select.open>.dropdown-toggle.btn-default:focus, 
+.bootstrap-select.open>.dropdown-toggle.btn-default:hover { border-color: $dark_blue}
+
+.snglFld, .slct_cnt {margin-bottom: 20px;
+	.snglFld {margin: 0}
+}
+.snglChck {
+	margin: 3px 0;
+	label {
+		position: relative;
+		padding-left: 25px;
+		cursor: pointer;
+		font-weight: 600;
+		input[type="radio"] {display: none}	
+		span { position: absolute; top: 2px; left: 0; width: 17px; height: 17px; border: 1px solid $black;@include border-radius(100%);
+			&:after {
+				content: "";
+				position:absolute; 
+				top: 0; 
+				left: 0; 
+				bottom: 0; 
+				right: 0; 
+				background: $black; 
+				opacity: 0; 
+				visibility: hidden;
+				@include transform(scale(0));
+				@include border-radius(100%);
+				@include transition(all 300ms);
+			}
+		}
+	}	
+}
+.snglChck input[type="radio"]:checked + span:after {opacity: 1;visibility: visible;	@include transform(scale(1))}	
+.btmBtns { margin-top: 30px}
+.bbsnglBtn {
+	margin: 20px 0;
+	text-align:center;
+	a {
+		display: block;
+		text-align: center;
+		text-decoration: none;
+		padding: 8px;
+		max-width: 300px;
+		margin: 0 auto;
+		border: 2px solid transparent;
+		@include border-radius(2px); 
+	}	
+}
+.primaryBtn {
+	a, button { background: $dark_blue; color: #fff;@include box-shadow(3px 3px 10px rgba(0, 0, 0, 0.3));
+		&:hover { color:$dark_blue; border-color: $dark_blue; background: #fff}
+	}	
+}
+.orangeBtn {
+	a, button { background: $orange; color: #fff;@include box-shadow(3px 3px 10px rgba(0, 0, 0, 0.3));
+		&:hover { color:$orange; border-color: $orange; background: #fff}
+	}	
+}
+.defaultBtn {
+	a { padding: 0 15px; color: $black; text-decoration: underline; display: inline-block;
+		&:hover { text-decoration: none}
+	}	
+}
+.btn-group.bootstrap-select .dropdown-menu {@include border-radius(2px); border-color: #b3b3b3}
+.alpInr {
+    position: relative;
+	.closePop {
+		position: absolute;
+		top: -20px;
+		right: -20px;
+		cursor: pointer;
+		&:before {
+			content: "";
+			position:absolute;
+			top: -8px;
+			right: -8px;
+			left: -8px;
+			bottom: -8px;
+			z-index: 0;
+			@include border-radius(100%);
+			@include box-shadow(4px -1px 5px rgba(0,0,0,.2));
+			background: #2baac8;
+			background: -moz-linear-gradient(top, #2baac8 0%, #46b5cf 100%);
+			background: -webkit-linear-gradient(top, #2baac8 0%,#46b5cf 100%);
+			background: linear-gradient(to bottom, #2baac8 0%,#46b5cf 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2baac8', endColorstr='#46b5cf',GradientType=0 );
+		}
+		span{
+			display: block;
+			position:relative;
+			z-index: 1;
+			width: 45px;
+			height: 45px;
+			border: 4px solid $dark_blue;
+			background: #fff url(../images/closeIcn.png) center center no-repeat;
+			@include border-radius(100%);
+			&:hover { background-color: $mid_blue}
+			
+		}
+	}
+}
+.bs-caret {
+	.caret { display: none}	
+}
+.snglFld .btn-default.active, 
+.snglFld .btn-default:active, 
+.snglFld .open>.dropdown-toggle.btn-default, 
+.snglFld .btn-group.open .dropdown-toggle {
+	@include box-shadow(none);
+	background: #fff
+}
+
+
+.blgCnt {
+    background: #fff;
+	max-width: 700px;
+	margin: 50px auto;
+	padding: 30px;
+	border-top: 1px solid $mid_gray;
+	border-left: 1px solid $mid_gray;
+	@include border-radius(4px);
+	@include box-shadow(2px 1px 9px rgba(0, 0, 0, 0.4));
+	.topOrngStrip { height: 30px; background:$redish_pink }
+}
+.bglHead {
+	padding-right: 100px;
+	position:relative;
+	border-bottom: 1px solid $gray;
+    padding-bottom: 15px;
+    margin: 15px 0;
+	h1 { font-size: 26px;}	
+	h4 { font-size: 14px; text-transform: uppercase; font-weight: 600}
+	.grpType {position: absolute;top: 10px;right: 0;font-size: 20px}
+	.actDect {
+		span { display: inline-block; width: 20px; height: 20px; background: #fff url(../images/greenTick.png) center center no-repeat;vertical-align: middle;border: 2px solid $parrot_green;@include border-radius(100%);}	
+	}
+}
+
+.snglClDtl {
+	.clntNmeImg {
+		position: relative;
+		padding-left: 40px;
+		.clientImg {
+			width: 30px;
+			height: 30px;
+			display: inline-block;
+			border-width: 1px;
+			border-style: solid;
+			position:absolute;
+			top: 2px; 
+			left:0;
+			background-image: url(../images/userIcn.png);
+			background-position: center center;
+			background-repeat: no-repeat; 
+			@include border-radius(100%);
+		}
+		.clntName { font-size: 16px; padding: 7px 0 2px; font-weight: 600;}	
+	}
+}
+.topClDtl {
+	.snglClDtl {
+	.clntName{font-size: 18px; padding: 5px 0 15px}
+	}
+}
+.topClDtl {
+	margin-bottom: 30px;
+	 p { font-size: 16px}	
+}	
+.red_clnt { background-color: $light_pink; border-color: $redish_pink}
+.green_clnt { background-color: $light_green; border-color: $dark_green}
+.blue_clnt { background-color: $light_blue; border-color: $dark_blue}
+.snglBlck {
+	border: 1px solid $light_gray;
+	.blckHead {padding: 13px 20px;font-size: 15px;text-transform: uppercase;font-weight: 700;background-color: $gray;
+	}
+	.clntDtls {  padding: 20px}
+	.ntPaidCncl {
+		padding-left: 40px;
+		ul {
+			li{ display: inline-block; position: relative;
+				.paid {padding-left: 17px; position: relative;
+					&:before { content: ""; width: 13px; height: 20px; background: #fff url(../images/blueTickSml.png) center center no-repeat; position: absolute; top: 1px; left: 0}
+				}
+			}	
+			
+		}	
+	}
+}
+.ntPaidCncl ul li + li { 
+	margin-left: 10px;
+	&:before { content: "|"; position: absolute; top: -1px;left: -11px;}
+
+} 
+.snglBlck + .snglBlck { margin-top: 20px}
+.blgCntInr {
+	.datetTime { padding: 20px; font-size: 18px;
+		span{ display: block}
+	}
+}
+
+.reocrs {
+    padding: 0 20px 10px;
+    position: relative;
+	.rcorsIcn {
+		width: 22px;
+		height: 22px;
+		position: absolute;
+		top: 0;
+		left: 20px;
+		background: #fff url(../images/recrngIcn.png) center center no-repeat;
+		@include border-radius(100%);
+	}
+	p { margin-left: 25px}
+}
+
+.dblBlck {
+	.scdLeft { float: left}	
+	.scdRight { float: right; position: relative; white-space: nowrap;margin: 10px 0;
+		.hrsImg {
+			width: 28px;
+			height: 28px;
+			display: inline-block;
+			vertical-align: middle;
+			position:absolute; 
+			top: -4px; 
+			left: 75px;
+			border-width: 1px;
+			border-style: solid;
+			background-image: url(../images/assgnToIcn.png);
+			background-repeat: no-repeat;
+			background-position: center center;
+			@include border-radius(100%);
+		}
+		span { float: left;font-style: italic; font-size: 13px; padding: 2px 0;}
+		.asgnyName { float: left; padding-left: 48px;font-weight: 600; width: 145px;}
+	}
+	
+}
+.snglClDtl + .snglClDtl { margin-top: 10px; padding-top: 10px; border-top: 1px solid $gray}
+
+.notes {
+	p { padding: 20px 20px 10px}	
+}
+
+.blgCnt {
+	.btmBtns {
+		margin-top: 20px;
+		.bbsnglBtn {
+			margin: 0;
+			a {max-width: 400px}
+		}
+	}
+}
+
+
+
+.grayBg { background-color:$light_gray}
+.blgFull { 
+	max-width: 90%;padding: 15px;
+	.blgFullCntnr { 
+		padding: 0 7%; 
+		.bglHead {padding-bottom: 0;margin: 25px 0; border: 0}
+		.btmBtns { 
+			margin-top: 40px;
+			.defaultBtn { margin: 18px 0}
+		}
+		
+	}
+}
+.blgFull { 
+	.bglHead {
+		h1 {
+			span,.blgHeadDrop { display: inline-block; vertical-align: middle}	
+			.blgHeadDrop {
+				.dropdown-menu { @include border-radius(0); min-width: 200px; padding: 10px 0}
+				a { font-size: 16px; padding: 10px 15px}	
+			}
+		}	
+	}
+	
+}
+.blgHeadDrop {
+	button { padding: 0; display: block; background: url(../images/headDrop.png) center center no-repeat; border: 0; width: 30px; height: 25px}	
+}
+
+.addedHrse {
+	padding-bottom: 15px;
+	.snglClDtl { 
+		position:relative; background: $light_gray; border: 1px solid $mid_gray; padding: 0; @include border-radius(2px);
+		.clntNmeImg { 
+			padding: 16px 55px 14px;
+			.clntName { padding: 0}
+			.clientImg {
+				top: 11px;left: 12px; 
+				img { min-width: 100%; min-height: 100%}
+			}
+		}
+		.adhCross {
+			position: absolute;
+			top:12px;
+			right: 12px;
+			button {
+				width: 28px;
+				height: 28px;
+				border: 2px solid $dark_gray;
+				background: $mid_gray url(../images/crsIcn.png) center center no-repeat;
+				@include border-radius(100%);
+					&:hover { background-color: #fff;
+				}
+			}
+		}
+		.psaCnt { 
+			padding: 15px; border-top: 1px solid $mid_gray;
+			.psacInr {
+				position: relative;
+				.slct_cnt { margin: 0}
+				.slct_cnt.dblSelect { padding-left: 55px}
+				.snglFld { width: 50%}
+				.paidUnpaidChk { position: absolute; top: 0;left: 0;
+					.cstmChck {
+						label {
+							input { display: none}
+							span {width: 40px; height: 40px; display: block; cursor: pointer; background-color: #fff; position: relativee; border: 1px solid $mid_gray; @include border-radius(2px);}
+						}	
+					}
+				}
+			}
+		}
+	}	
+}
+.cstmChck input:checked + span { background-image: url(../images/blueTick.png); background-position: center center; background-repeat: no-repeat}
+.lnText {
+	textarea { width: 100%; padding: 15px; resize: none; border: 1px solid $mid_gray; background: #fff; @include border-radius(2px) }	
+}

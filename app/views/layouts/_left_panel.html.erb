@@ -1,0 +1,35 @@
+<div class="leftMenu">
+  <div class="mainMenuIcn"></div>
+    <div class="lmInr">
+        <div class="leftuserTop">
+            <div class="lutImage">
+                <%=image_tag "userImage.png", alt: "User Image" %>
+            </div>
+            <h2>Cold Brook Stables</h2>
+        </div>
+        <div class="leftMainMenu">
+            <div class="lmmInr mCustomScrollbar" data-mcs-theme="dark">
+                <ul>
+                    <li><a href=""><%= image_tag "dashbrdIcn.png", alt:"Menu Icons" %> Dashboard</a></li>
+                    <li><a href="" class="active"><%= image_tag "calIcn.png", alt:"Menu Icons" %> Calendar</a></li>
+                    <li><a href=""><%= image_tag "clientIcn.png", alt:"Menu Icons" %> Clients</a></li>
+                    <li><a href=""><%= image_tag "hrseIcn.png", alt:"Menu Icons" %> Horses</a></li>
+                    <li><a href=""><%= image_tag "staffIcn.png", alt:"Menu Icons" %> Staff</a></li>
+                    <li><a href=""><%= image_tag "invoiceIcn.png", alt:"Menu Icons" %> Invoices</a></li>
+                    <li><a href=""><%= image_tag"rprtsIcn.png", alt:"Menu Icons" %> Reports</a></li>
+                    <%-if user_signed_in? %>
+                        <li><a href='/api/v1/sign_out' data-method="delete"><%= image_tag "staffIcn.png", alt:"Menu Icons" %> Logout</a></li>
+                    <%end%>
+                </ul>
+            </div>
+        </div>
+        <div class="lmFoot">
+            <div class="lmfImg"><%= image_tag "ftrLogo.png", alt: "Foot Logo" %></div>
+            <p>Powered by <strong>Equine Office</strong></p>
+            <ul>
+                <li><a href="">Terms</a></li>
+                <li><a href="">Privacy Policy</a></li>
+            </ul>
+        </div>
+  </div>
+</div>

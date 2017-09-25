@@ -1,0 +1,12 @@
+
+/* variables and minix scss */
+@import 'base/_variables.scss';
+@import 'mixin/_mixin.scss';
+
+/* base scss */
+@import 'base/_base.scss';
+
+/* pages scss */
+@import 'layout/_loginRegister.scss';
+@import 'layout/_leftmenu.scss';
+@import 'layout/_rightside.scss';
