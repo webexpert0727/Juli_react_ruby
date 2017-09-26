@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170911111555) do
+ActiveRecord::Schema.define(version: 20170915122143) do
 
   create_table "enrollment_statuses", force: :cascade do |t|
     t.string   "enrollment_status_name", limit: 255
@@ -115,30 +115,48 @@ ActiveRecord::Schema.define(version: 20170911111555) do
   add_index "lesson_date_time_horses", ["horse_id"], name: "index_lesson_date_time_horses_on_horse_id", using: :btree
   add_index "lesson_date_time_horses", ["lesson_date_time_id"], name: "index_lesson_date_time_horses_on_lesson_date_time_id", using: :btree
 
+  create_table "lesson_date_time_series", force: :cascade do |t|
+    t.integer  "frequency",          limit: 4,     default: 1
+    t.string   "period",             limit: 255,   default: "week"
+    t.datetime "starttime"
+    t.datetime "endtime"
+    t.string   "repeat_end_status",  limit: 255
+    t.text     "week_recuring_days", limit: 65535
+    t.boolean  "all_day",            limit: 1,     default: false
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+    t.integer  "user_id",            limit: 4
+  end
+
+  add_index "lesson_date_time_series", ["user_id"], name: "index_lesson_date_time_series_on_user_id", using: :btree
+
   create_table "lesson_date_times", force: :cascade do |t|
-    t.string   "name",                limit: 255
+    t.string   "name",                       limit: 255
     t.datetime "scheduled_date"
     t.time     "scheduled_starttime"
-    t.integer  "duration",            limit: 4
+    t.integer  "duration",                   limit: 4
     t.time     "scheduled_endtime"
-    t.integer  "instructor_id",       limit: 4
-    t.integer  "location_id",         limit: 4
-    t.integer  "default_product_id",  limit: 4
-    t.integer  "max_enrollment",      limit: 4
-    t.integer  "number_scheduled",    limit: 4
-    t.integer  "section_id",          limit: 4
-    t.integer  "lesson_status_id",    limit: 4
-    t.text     "lesson_notes",        limit: 65535
-    t.string   "stringnum",           limit: 255
-    t.integer  "farm_id",             limit: 4
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.integer  "instructor_id",              limit: 4
+    t.integer  "location_id",                limit: 4
+    t.integer  "default_product_id",         limit: 4
+    t.integer  "max_enrollment",             limit: 4
+    t.integer  "number_scheduled",           limit: 4
+    t.integer  "section_id",                 limit: 4
+    t.integer  "lesson_status_id",           limit: 4
+    t.text     "lesson_notes",               limit: 65535
+    t.string   "stringnum",                  limit: 255
+    t.integer  "farm_id",                    limit: 4
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
     t.datetime "scheduled_end_date"
-    t.integer  "user_id",             limit: 4
+    t.integer  "user_id",                    limit: 4
+    t.integer  "lesson_date_time_series_id", limit: 4
+    t.boolean  "is_recuring",                limit: 1,     default: false
   end
 
   add_index "lesson_date_times", ["farm_id"], name: "index_lesson_date_times_on_farm_id", using: :btree
   add_index "lesson_date_times", ["instructor_id"], name: "index_lesson_date_times_on_instructor_id", using: :btree
+  add_index "lesson_date_times", ["lesson_date_time_series_id"], name: "index_lesson_date_times_on_lesson_date_time_series_id", using: :btree
   add_index "lesson_date_times", ["location_id"], name: "index_lesson_date_times_on_location_id", using: :btree
   add_index "lesson_date_times", ["section_id"], name: "index_lesson_date_times_on_section_id", using: :btree
 

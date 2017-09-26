@@ -1,3 +1,151 @@
-#root{
+#root {
   height: '100%';
+}
+.textItalic {
+  font-style: italic;
+}
+.addHorseRowWrap {
+  float: left;
+  position: relative;
+  width: 100%;
+  border-bottom: 3px solid #e6e6e6;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.breadcrumbWrap,
+.addHorsesWrap {
+  padding: 0;
+}
+.breadcrumbWrap .breadcrumb {
+  font-size: 20px;
+  padding: 5px 0;
+}
+.breadcrumbWrap .breadcrumb > li + li:before {
+  content: '';
+  background-image: url('/assets/calRghtIcnGry.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  padding: 0 10px;
+}
+.breadcrumbWrap .breadcrumb > li > a {
+  color: #4d4d4d;
+}
+.breadcrumbWrap .breadcrumb > li > a:hover,
+.breadcrumbWrap .breadcrumb > li > a:focus {
+  color: #4d4d4d;
+}
+.addHorses {
+  float: right;
+  position: relative;
+  width: 50%;
+}
+.horseTableContainer {
+  background-color: #f2f2f2;
+  border: 1px solid #dddddd;
+  margin: 30px auto;
+  float: left;
+  position: relative;
+  width: 100%;
+  padding: 25px 20px;
+  -webkit-box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.2);
+  -ms-box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.2);
+}
+.filterBoxWrap .filterBox {
+  width: calc(100% / 5 - 25px);
+  margin: 0 5px;
+  min-width: 180px;
+  vertical-align: middle;
+  display: inline-block;
+}
+.filterBoxWrap .filterBox .titleBar {
+  font-size: 12px;
+  font-weight: 800;
+  background-color: #ddd;
+  padding: 5px 5px;
+}
+.contentWrap {
+  background-color: #fff;
+  padding: 10px 30px;
+}
+
+.horseTableContainer .filterTitle {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+.horseSelectBoxWrap {
+  margin-bottom: 20px;
+}
+.horseSelectBoxWrap h5 {
+  font-size: 13px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+.horseSelectBox {
+  max-width: 200px;
+  min-height: 35px;
+  background-color: #fff;
+  border: 1px solid #999;
+  border-radius: 4px;
+}
+.horseSelectBox:focus {
+  border-color: #ff7900;
+  outline: none !important;
+  box-shadow: none;
+}
+.horseTable .headRow {
+  background-color: #e6e6e6;
+}
+.horseTable {
+  background-color: #fff;
+  margin-bottom: 0;
+}
+.horseTable > tbody > tr > td,
+.horseTable > tbody > tr > th {
+  padding: 12px 8px;
+  vertical-align: middle;
+}
+.horseTable > thead > tr > th {
+  font-size: 13px;
+  font-weight: bold;
+}
+.horseTable > tbody > tr > td.columnTitle {
+  font-size: 12px;
+  font-weight: 800;
+}
+.horseTable > tbody > tr > td > img {
+  display: block;
+}
+.horseTable > tbody > tr > td.iconWrap img {
+  vertical-align: middle;
+}
+.horseTable .rowTitle .iconWrap {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  display: inline-block;
+  text-align: center;
+  padding: 1px 5px;
+}
+.horseTable .rowTitle .iconWrap.blueHorse {
+  background-color: #a9e9f9;
+  border: 1px solid #5cc9d9;
+}
+.horseTable .rowTitle .iconWrap.cinnamonHorse {
+  background-color: #fab9b8;
+  border: 1px solid #ef5c5c;
+}
+.horseTable .rowTitle .iconWrap.greenHorse {
+  background-color: #78dd9f;
+  border: 1px solid #40c89c;
+}
+.horseTable .rowTitle span {
+  display: inline-block;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.horseTable .iconWrap img {
+  margin: 0 auto;
+  vertical-align: middle;
 }

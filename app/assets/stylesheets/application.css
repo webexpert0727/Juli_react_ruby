@@ -21,7 +21,7 @@
  *= require scheduler.min
  *= require style
  *= require responsive
- *= custom_css
+ *= require custom_css
  */
 
 .rc-time-picker-panel{
