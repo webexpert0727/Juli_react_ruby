@@ -19,6 +19,7 @@
 .breadcrumbWrap .breadcrumb {
   font-size: 20px;
   padding: 5px 0;
+  background-color: transparent;
 }
 .breadcrumbWrap .breadcrumb > li + li:before {
   content: '';
@@ -42,7 +43,7 @@
 .horseTableContainer {
   background-color: #f2f2f2;
   border: 1px solid #dddddd;
-  margin: 30px auto;
+  margin: 50px auto;
   float: left;
   position: relative;
   width: 100%;
@@ -52,12 +53,24 @@
   -ms-box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.2);
   box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.2);
 }
+.horseTableContainer .customDatePicker {
+  max-width: 220px;
+}
+.filterBoxWrap {
+  margin-bottom: 40px;
+}
 .filterBoxWrap .filterBox {
-  width: calc(100% / 5 - 25px);
-  margin: 0 5px;
-  min-width: 180px;
+  width: calc(100% / 5 - 17px);
+  margin: 0 10px;
+  /* min-width: 180px; */
   vertical-align: middle;
   display: inline-block;
+}
+.filterBoxWrap .filterBox:first-child {
+  margin-left: 0;
+}
+.filterBoxWrap .filterBox:last-child {
+  margin-right: 0;
 }
 .filterBoxWrap .filterBox .titleBar {
   font-size: 12px;
@@ -65,11 +78,10 @@
   background-color: #ddd;
   padding: 5px 5px;
 }
-.contentWrap {
+.filterBoxWrap .filterBox .contentWrap {
   background-color: #fff;
-  padding: 10px 30px;
+  padding: 15px 50px;
 }
-
 .horseTableContainer .filterTitle {
   font-size: 26px;
   margin-bottom: 10px;
@@ -98,7 +110,7 @@
   background-color: #e6e6e6;
 }
 .horseTable {
-  background-color: #fff;
+  background-color: #fff !important;
   margin-bottom: 0;
 }
 .horseTable > tbody > tr > td,
@@ -109,6 +121,9 @@
 .horseTable > thead > tr > th {
   font-size: 13px;
   font-weight: bold;
+}
+.horseTable > tbody > tr > td {
+  background-color: #fff !important;
 }
 .horseTable > tbody > tr > td.columnTitle {
   font-size: 12px;
@@ -148,4 +163,46 @@
 .horseTable .iconWrap img {
   margin: 0 auto;
   vertical-align: middle;
+}
+
+/*********************/
+/*   Media Query    */
+/*********************/
+@media only screen and (max-width: 1380px) {
+  .filterBoxWrap .filterBox .contentWrap {
+    padding: 5px 40px;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .horseTableContainer {
+    margin: 40px auto;
+  }
+  .filterBoxWrap .filterBox {
+    width: calc(100% / 5 - 8px);
+    margin: 0 5px;
+    /* min-width: 145px; */
+  }
+  .filterBoxWrap .filterBox .contentWrap {
+    padding: 5px 30px;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .filterBoxWrap .filterBox .contentWrap {
+    padding: 5px 20px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .breadcrumbWrap .breadcrumb {
+    text-align: center;
+  }
+  .addHorses {
+    width: 100%;
+  }
+  .filterBoxWrap .filterBox {
+    width: 100%;
+    margin: 0px 0 20px;
+  }
+  .filterBoxWrap .filterBox .contentWrap img {
+    max-width: 20%;
+  }
 }
