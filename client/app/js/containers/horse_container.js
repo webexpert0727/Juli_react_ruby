@@ -22,7 +22,6 @@ class HorseContainer extends BaseComponent {
   }
 
   componentWillMount() {
-    console.log(this.props);
     this.props.getHorses();
   }
 
@@ -59,18 +58,34 @@ class HorseContainer extends BaseComponent {
     return <div />;
   }
 
-  createHorsesList(horse) {
-    return (
-      <tr key={horse.id}>
-        <td>{horse.id}</td>
-        <td>{horse.horse_name}</td>
-      </tr>
-    );
+  createHorsesDay(horse, day) {
+    if (horse.day === day) {
+      if (horse.count > 2) {
+        return (
+          <td>
+            <img src={'/assets/hrseIcnGreenSmall.png'} className="" />
+            <img src={'/assets/hrseIcnGreenPlus.png'} className="" />
+          </td>
+        );
+      } else {
+        return (
+          <td>
+            <img src={'/assets/hrseIcnGreenSmall.png'} className="" />
+            <img src={'/assets/hrseIcnGreenSmall.png'} className="" />
+          </td>
+        );
+      }
+    } else {
+      return (
+        <td>
+          <img src={'/assets/horseGreySmall.png'} className="" />
+        </td>
+      );
+    }
   }
 
   render() {
-    var horses = _.map(this.props.horses, this.createHorsesList);
-
+    var horses = _.map(this.props.horses);
     return (
       <div className="rightMain">
         <div className="rmInr mCustomScrollbar" data-mcs-theme="dark">
@@ -95,7 +110,7 @@ class HorseContainer extends BaseComponent {
                     <li>
                       <a href="#">Horses</a>
                     </li>
-                    <li class="active">Horse Workload</li>
+                    <li className="active">Horse Workload</li>
                   </ol>
                 </div>
                 <div className="col-sm-6 col-xs-12 addHorsesWrap">
@@ -214,214 +229,42 @@ class HorseContainer extends BaseComponent {
                   <div className="table-responsive">
                     <table className="table horseTable">
                       <thead className="headRow">
-                        <th className="text-uppercase">lessons</th>
-                        <th colSpan="7" />
+                        <tr>
+                          <th className="text-uppercase">lessons</th>
+                          <th colSpan="7" />
+                        </tr>
                       </thead>
                       <tbody>
                         <tr>
                           <td className="columnTitle">Horse</td>
-                          <td className="text-uppercase columnTitle">sun</td>
-                          <td className="text-uppercase columnTitle">sun</td>
-                          <td className="text-uppercase columnTitle">sun</td>
-                          <td className="text-uppercase columnTitle">sun</td>
-                          <td className="text-uppercase columnTitle">sun</td>
-                          <td className="text-uppercase columnTitle">sun</td>
-                          <td className="text-uppercase columnTitle">sun</td>
+                          <td className="text-uppercase columnTitle">SUN</td>
+                          <td className="text-uppercase columnTitle">MON</td>
+                          <td className="text-uppercase columnTitle">TUE</td>
+                          <td className="text-uppercase columnTitle">WED</td>
+                          <td className="text-uppercase columnTitle">THU</td>
+                          <td className="text-uppercase columnTitle">FRI</td>
+                          <td className="text-uppercase columnTitle">SAT</td>
                         </tr>
+                        {horses.map((horse, index) => (
+                          <tr key={index}>
+                            <td className="rowTitle">
+                              <div className="iconWrap blueHorse">
+                                <img src={'/assets/hrseIcn.png'} className="" />
+                              </div>
+                              <span>{horse.horse_name}</span>
+                            </td>
+                            {this.createHorsesDay(horse, 'Sunday')}
+                            {this.createHorsesDay(horse, 'Monday')}
+                            {this.createHorsesDay(horse, 'Tuesday')}
+                            {this.createHorsesDay(horse, 'Wednesday')}
+                            {this.createHorsesDay(horse, 'Thursday')}
+                            {this.createHorsesDay(horse, 'Friday')}
+                            {this.createHorsesDay(horse, 'Saturday')}
+                          </tr>
+                        ))}
                         <tr>
-                          <td className="rowTitle">
-                            <div className="iconWrap blueHorse">
-                              <img src={'/assets/hrseIcn.png'} className="" />
-                            </div>
-                            <span>Blueberry</span>
-                          </td>
-                          <td>
-                            <img src={'/assets/hrseIcn.png'} className="" />
-                          </td>
-                          <td>
-                            <img
-                              src={'/assets/hrseIcnGreenSmall.png'}
-                              className=""
-                            />
-                          </td>
-                          <td>
-                            <img src={'/assets/hrseIcn.png'} className="" />
-                          </td>
-                          <td>
-                            <img src={'/assets/hrseIcn.png'} className="" />
-                          </td>
-                          <td>
-                            <img src={'/assets/hrseIcn.png'} className="" />
-                          </td>
-                          <td>
-                            <img src={'/assets/hrseIcn.png'} className="" />
-                          </td>
-                          <td>
-                            <img src={'/assets/hrseIcn.png'} className="" />
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="rowTitle">
-                            <div className="iconWrap cinnamonHorse">
-                              <img src={'/assets/hrseIcn.png'} className="" />
-                            </div>
-                            <span>Cinnamon</span>
-                          </td>
-                          <td>
-                            <img src={'/assets/hrseIcn.png'} className="" />
-                          </td>
-                          <td>
-                            <img
-                              src={'/assets/hrseIcnGreenSmall.png'}
-                              className=""
-                            />
-                          </td>
-                          <td>
-                            <img
-                              src={'/assets/hrseIcnGreenSmall.png'}
-                              className=""
-                            />
-                          </td>
-                          <td>
-                            <img
-                              src={'/assets/hrseIcnGreenSmall.png'}
-                              className=""
-                            />
-                          </td>
-                          <td>
-                            <img
-                              src={'/assets/hrseIcnGreenSmall.png'}
-                              className=""
-                            />
-                          </td>
-                          <td>
-                            <img
-                              src={'/assets/hrseIcnGreenSmall.png'}
-                              className=""
-                            />
-                          </td>
-                          <td>
-                            <img
-                              src={'/assets/hrseIcnGreenSmall.png'}
-                              className=""
-                            />
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="rowTitle">
-                            <div className="iconWrap">
-                              <img
-                                src={'/assets/clientImage.png'}
-                                className=""
-                              />
-                            </div>
-                            <span>George</span>
-                          </td>
-                          <td>
-                            <img src={'/assets/hrseIcn.png'} className="" />
-                          </td>
-                          <td>
-                            <img
-                              src={'/assets/hrseIcnGreenSmall.png'}
-                              className=""
-                            />
-                          </td>
-                          <td>
-                            <img
-                              src={'/assets/hrseIcnGreenSmall.png'}
-                              className=""
-                            />
-                          </td>
-                          <td>
-                            <img
-                              src={'/assets/hrseIcnGreenSmall.png'}
-                              className=""
-                            />
-                            <img
-                              src={'/assets/hrseIcnGreenSmall.png'}
-                              className=""
-                            />
-                          </td>
-                          <td>
-                            <img
-                              src={'/assets/hrseIcnGreenSmall.png'}
-                              className=""
-                            />
-                          </td>
-                          <td>
-                            <img src={'/assets/hrseIcn.png'} className="" />
-                          </td>
-                          <td>
-                            <img src={'/assets/hrseIcn.png'} className="" />
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="rowTitle">
-                            <div className="iconWrap blueHorse">
-                              <img src={'/assets/hrseIcn.png'} className="" />
-                            </div>
-                            <span>Blueberry</span>
-                          </td>
-                          <td>
-                            <img src={'/assets/hrseIcn.png'} className="" />
-                          </td>
-                          <td>
-                            <img
-                              src={'/assets/hrseIcnGreenSmall.png'}
-                              className=""
-                            />
-                          </td>
-                          <td>
-                            <img src={'/assets/hrseIcn.png'} className="" />
-                          </td>
-                          <td>
-                            <img src={'/assets/hrseIcn.png'} className="" />
-                          </td>
-                          <td>
-                            <img src={'/assets/hrseIcn.png'} className="" />
-                          </td>
-                          <td>
-                            <img src={'/assets/hrseIcn.png'} className="" />
-                          </td>
-                          <td>
-                            <img src={'/assets/hrseIcn.png'} className="" />
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="rowTitle">
-                            <div className="iconWrap blueHorse">
-                              <img src={'/assets/hrseIcn.png'} className="" />
-                            </div>
-                            <span>Blueberry</span>
-                          </td>
-                          <td>
-                            <img src={'/assets/hrseIcn.png'} className="" />
-                          </td>
-                          <td>
-                            <img
-                              src={'/assets/hrseIcnGreenSmall.png'}
-                              className=""
-                            />
-                          </td>
-                          <td>
-                            <img src={'/assets/hrseIcn.png'} className="" />
-                          </td>
-                          <td>
-                            <img src={'/assets/hrseIcn.png'} className="" />
-                          </td>
-                          <td>
-                            <img src={'/assets/hrseIcn.png'} className="" />
-                          </td>
-                          <td>
-                            <img src={'/assets/hrseIcn.png'} className="" />
-                          </td>
-                          <td>
-                            <img src={'/assets/hrseIcn.png'} className="" />
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="textItalic">10 horses</td>
-                          <td colSpan="6" />
+                          <td className="textItalic">{horses.length} horses</td>
+                          <td colSpan="7" />
                         </tr>
                       </tbody>
                     </table>
