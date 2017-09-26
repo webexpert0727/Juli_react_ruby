@@ -24,6 +24,6 @@
  *= require custom_css
  */
 
-.rc-time-picker-panel{
- z-index: 9999999!important; 
+.rc-time-picker-panel {
+  z-index: 9999999 !important;
 }

@@ -135,13 +135,13 @@ class HorseContainer extends BaseComponent {
                     </h2>
                     <div className="horseSelectBoxWrap">
                       <h5>Week</h5>
+
                       <select className="form-control horseSelectBox">
-                        <option>Choose a Horse</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        <option>Choose a Week</option>
+                        <option>Sept 24,2017 to Sept 30,2017</option>
+                        <option>Sept 14,2017 to Sept 23,2017</option>
+                        <option>Sept 10,2017 to Sept 16,2017</option>
+                        <option>Sept 3,2017 to Sept 9,2017</option>
                       </select>
                     </div>
                     <div className="filterBoxWrap">
@@ -154,7 +154,7 @@ class HorseContainer extends BaseComponent {
                         <div className="contentWrap">
                           <img
                             src={'/assets/aactiveProgressbar.png'}
-                            className=""
+                            className="img-responsive"
                           />
                         </div>
                       </div>
@@ -167,7 +167,7 @@ class HorseContainer extends BaseComponent {
                         <div className="contentWrap">
                           <img
                             src={'/assets/normalProgressbar.png'}
-                            className=""
+                            className="img-responsive"
                           />
                         </div>
                       </div>
@@ -180,7 +180,7 @@ class HorseContainer extends BaseComponent {
                         <div className="contentWrap">
                           <img
                             src={'/assets/normalProgressbar.png'}
-                            className=""
+                            className="img-responsive"
                           />
                         </div>
                       </div>
@@ -193,7 +193,7 @@ class HorseContainer extends BaseComponent {
                         <div className="contentWrap">
                           <img
                             src={'/assets/normalProgressbar.png'}
-                            className=""
+                            className="img-responsive"
                           />
                         </div>
                       </div>
@@ -206,7 +206,7 @@ class HorseContainer extends BaseComponent {
                         <div className="contentWrap">
                           <img
                             src={'/assets/normalProgressbar.png'}
-                            className=""
+                            className="img-responsive"
                           />
                         </div>
                       </div>
