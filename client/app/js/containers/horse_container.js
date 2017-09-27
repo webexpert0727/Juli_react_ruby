@@ -72,6 +72,16 @@ class HorseContainer extends BaseComponent {
     return <div />;
   }
 
+  averageDayPerHorse(chartData) {
+    if (chartData) {
+      if (chartData.day_off_count <= 0) {
+        return 0;
+      } else {
+        return chartData.day_off_count / chartData.filter_data.used_horse_count;
+      }
+    }
+  }
+
   createHorsesDay(horseRecords, day) {
     const horseIndex = _.findIndex(horseRecords, function(o) {
       return o.day === day;
@@ -99,7 +109,6 @@ class HorseContainer extends BaseComponent {
             <img key={i} src={'/assets/hrseIcnGreenSmall.png'} className="" />
           );
         }
-        console.log(indents);
         return <td>{indents}</td>;
       }
     } else {
@@ -115,6 +124,99 @@ class HorseContainer extends BaseComponent {
     var horses = _.map(this.props.horses);
     var week = _.map(this.props.week);
     var horsesReport = _.map(this.props.horsesReport);
+    var chartData = this.props.chartData;
+
+    var App = React.createClass({
+      getInitialState() {
+        return {
+          donutval: parseInt(this.props.donutval)
+        };
+      },
+      updateVal(e) {
+        this.setState({ donutval: e.target.value });
+      },
+
+      render() {
+        return (
+          <div>
+            <DonutChart value={this.state.donutval || 0} />
+          </div>
+        );
+      }
+    });
+
+    const DonutChart = React.createClass({
+      propTypes: {
+        value: React.PropTypes.number, // value the chart should show
+        valuelabel: React.PropTypes.string, // label for the chart
+        size: React.PropTypes.number, // diameter of chart
+        strokewidth: React.PropTypes.number // width of chart line
+      },
+      getDefaultProps() {
+        return {
+          value: 0,
+          valuelabel: 'Completed',
+          size: 100,
+          strokewidth: 7
+        };
+      },
+      render() {
+        const halfsize = this.props.size * 0.5;
+        const radius = halfsize - this.props.strokewidth * 0.5;
+        const circumference = 2 * Math.PI * radius;
+        const strokeval = this.props.value * circumference / 10;
+        const dashval = strokeval + ' ' + circumference;
+
+        const trackstyle = { strokeWidth: this.props.strokewidth };
+        const indicatorstyle = {
+          strokeWidth: this.props.strokewidth,
+          strokeDasharray: dashval
+        };
+        const rotateval = 'rotate(-90 ' + halfsize + ',' + halfsize + ')';
+
+        return (
+          <svg
+            width={this.props.size}
+            height={this.props.size}
+            className="donutchart"
+          >
+            <circle
+              r={radius}
+              cx={halfsize}
+              cy={halfsize}
+              transform={rotateval}
+              style={trackstyle}
+              className="donutchart-track"
+            />
+            <circle
+              r={radius}
+              cx={halfsize}
+              cy={halfsize}
+              transform={rotateval}
+              style={indicatorstyle}
+              className="donutchart-indicator"
+            />
+            <text
+              className="donutchart-text"
+              x={halfsize}
+              y={halfsize}
+              style={{ textAnchor: 'middle' }}
+            >
+              <tspan className="donutchart-text-val">{this.props.value}</tspan>
+              <tspan
+                className="donutchart-text-label"
+                x={halfsize}
+                y={halfsize + 10}
+              />
+            </text>
+          </svg>
+        );
+      }
+    });
+
+    document.querySelector('#main');
+    document.querySelector('#main1');
+
     return (
       <div className="rightMain">
         <div className="rmInr mCustomScrollbar" data-mcs-theme="dark">
@@ -184,62 +286,68 @@ class HorseContainer extends BaseComponent {
                           </h4>
                         </div>
                         <div className="contentWrap">
-                          <img
-                            src={'/assets/aactiveProgressbar.png'}
-                            className="img-responsive"
+                          <App
+                            donutval={
+                              chartData &&
+                              chartData.filter_data.used_horse_count
+                            }
                           />
+                          <div id="main1" />
                         </div>
                       </div>
                       <div className="filterBox">
                         <div className="titleBar">
                           <h4 className="text-uppercase">
-                            horses used this week
+                            Average lessons per horse
                           </h4>
                         </div>
                         <div className="contentWrap">
-                          <img
-                            src={'/assets/normalProgressbar.png'}
-                            className="img-responsive"
+                          <App
+                            donutval={
+                              chartData &&
+                              chartData.filter_data.avarage_lessons_per_horse
+                            }
                           />
+                          <div id="main1" />
                         </div>
                       </div>
                       <div className="filterBox">
                         <div className="titleBar">
                           <h4 className="text-uppercase">
-                            horses used this week
+                            Average days off per horse
                           </h4>
                         </div>
                         <div className="contentWrap">
-                          <img
-                            src={'/assets/normalProgressbar.png'}
-                            className="img-responsive"
-                          />
+                          <App donutval={this.averageDayPerHorse(chartData)} />
+                          <div id="main1" />
                         </div>
                       </div>
                       <div className="filterBox">
                         <div className="titleBar">
                           <h4 className="text-uppercase">
-                            horses used this week
+                            Horses with no days off
                           </h4>
                         </div>
                         <div className="contentWrap">
-                          <img
-                            src={'/assets/normalProgressbar.png'}
-                            className="img-responsive"
+                          <App
+                            donutval={
+                              chartData && chartData.horse_with_no_days_off
+                            }
                           />
+                          <div id="main1" />
                         </div>
                       </div>
                       <div className="filterBox">
                         <div className="titleBar">
                           <h4 className="text-uppercase">
-                            horses used this week
+                            Horses with 10+ lessons
                           </h4>
                         </div>
                         <div className="contentWrap">
-                          <img
-                            src={'/assets/normalProgressbar.png'}
-                            className="img-responsive"
+                          <App
+                            donutval={chartData && chartData.more_than_10_count}
                           />
+                          <div id="main1" />
                         </div>
                       </div>
                     </div>
@@ -379,7 +487,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     horses: state.horses,
     horsesReport: state.horsesReport && state.horsesReport.horses_report,
-    week: state.horsesReport && state.horsesReport.week
+    week: state.horsesReport && state.horsesReport.week,
+    chartData: state.horsesReport && state.horsesReport.chart_data
   };
 };
 

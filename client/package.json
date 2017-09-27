@@ -11,6 +11,7 @@
     "client/node_modules"
   ],
   "dependencies": {
+    "@amcharts/amcharts3-react": "^3.0.1",
     "atomic-form": "git://github.com/atomicjolt/atomic-form.git",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
