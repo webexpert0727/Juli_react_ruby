@@ -13,6 +13,7 @@ import ForgetPassword from '../components/ForgetPassword';
 import Register from '../components/Register';
 import Calender from '../components/Calender';
 import Horses from '../components/horses';
+import Clients from '../components/Clients';
 import { Router, Route, Link, browserHistory, IndexRoute  } from 'react-router';
 import SettingsStore from '../settings';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
@@ -32,6 +33,7 @@ ReactDOM.render(
           <Route path = "/register" component = {Register} onEnter={checkLogin}/>
           <Route path = "/calender" component = {Calender} onEnter={needLogin}/>
           <Route path = "/horses" component = {Horses} onEnter={needLogin}/>
+          <Route path = "/clients" component = {Clients} onEnter={needLogin}/>
           <Route path = "/api/v1/password/edit" component = {ForgetPassword} />
         </Route>
       </Router>

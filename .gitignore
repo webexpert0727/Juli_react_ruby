@@ -21,3 +21,4 @@ node_modules
 
 # Generated js bundles
 /public/webpack/*
+._.*
