@@ -14,7 +14,9 @@ Rails.application.routes.draw do
         resources :lesson_date_time_horses, only: [:index]
       end
       resources :enrollment_statuses, only: [:index]
-      resources :horses, only: [:index, :create]
+      resources :horses, only: [:index, :create] do
+        get "horses_report", on: :collection
+      end
       resources :lesson_people, only: [:index]
     end
   end

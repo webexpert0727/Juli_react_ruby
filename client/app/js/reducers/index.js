@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import UserReducer from './reducer-users';
 import userLoginDetail from './reducer-user-login-detail';
 import Locations from './locations';
@@ -10,12 +10,13 @@ import LessonDateTimes from './lesson_date_times';
 import LessonDateTime from './lesson_date_time';
 import GetLesson from './get_lesson';
 import Horses from './horses';
+import GetHorsesReport from './get_horses_report';
 import EnrollmentStatuses from './enrollment_status';
 import LessonPeople from './lesson_people';
 import LessonHorses from './get_lesson_horses';
 import UpdatedLesson from './update_lesson';
-import AddLesson   from './add_lesson'
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
+import AddLesson from './add_lesson';
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
 /*
  * We combine all reducers into a single object before updated data is dispatched (sent) to store
@@ -33,6 +34,7 @@ const allReducers = combineReducers({
   lessonDateTimes: LessonDateTimes,
   lessonDateTime: GetLesson,
   horses: Horses,
+  horsesReport: GetHorsesReport,
   enrollment_statuses: EnrollmentStatuses,
   lessonPeople: LessonPeople,
   lessonHorses: LessonHorses,
@@ -41,4 +43,4 @@ const allReducers = combineReducers({
   routing: routerReducer
 });
 
-export default allReducers
+export default allReducers;

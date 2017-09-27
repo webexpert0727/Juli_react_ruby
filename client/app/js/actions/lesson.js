@@ -59,6 +59,23 @@ export default {
     };
   },
 
+  // get horses report
+  getHorsesReport(data) {
+    return function(dispatch) {
+      Api.get(
+        '/horses/horses_report?horse_id=' +
+          data['horse_id'] +
+          '&week=' +
+          data['week']
+      ).then(function(res, err) {
+        return dispatch({
+          type: Constants.GET_HORSES_REPORT,
+          payload: res
+        });
+      });
+    };
+  },
+
   // get enrollment_statuses
   getEnrollmentStatuses() {
     return function(dispatch) {

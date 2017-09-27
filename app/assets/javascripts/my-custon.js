@@ -53,37 +53,45 @@ function initTimepicker() {
   }, 500);
 }
 
-// $(document).ready(function() {
-//   $('#selectPrevWeek').on('click', function() {
-//     selectPrevWeek();
-//   });
-//   $('#selectNextWeek').on('click', function() {
-//     selectNextWeek();
-//   });
+var selectedWeek;
+var currentWeek;
+$(document).ready(function() {
+  //Initialize the datePicker(I have taken format as mm-dd-yyyy, you can     //have your owh)
+  $('#weeklyDatePicker').datetimepicker({
+    format: 'MM/DD/YYYY'
+  });
+  $('#prev').click(function() {
+    selectedWeek--;
+    updateDate(moment().week(selectedWeek));
+  });
+  $('#next').click(function() {
+    if (selectedWeek + 1 > currentWeek) {
+      alert("Can't select future week");
+      return;
+    }
+    selectedWeek++;
+    updateDate(moment().week(selectedWeek));
+  });
+  //Get the value of Start and End of Week
+  $('#weeklyDatePicker').on('dp.change', function(e) {
+    updateDate($('#weeklyDatePicker').val());
+  });
 
-//   function selectPrevWeek() {
-//     console.log('prev');
-//   }
-//   function selectNextWeek() {
-//     console.log('n');
-//   }
-//   function setCurrentWeek() {
-//     var dateNow = new Date();
-//     // var currentWeek = '24 sept, 2017';
-//     var dateToday = new Date(
-//       dateNow.getFullYear(),
-//       dateNow.getMonth(),
-//       dateNow.getDate()
-//     );
-//     var dateSunday = new Date(
-//       dateToday.getTime() - dateToday.getDay() * 24 * 3600 * 1000
-//     );
+  updateDate(moment());
+});
 
-//     console.log(dateSunday);
-//     // $(document)
-//     //   .find('#currentWeek')
-//     //   .val(currentWeek);
-//   }
-
-//   setCurrentWeek();
-// });
+function updateDate(p_value) {
+  var firstDate = moment(p_value, 'MM-DD-YYYY')
+    .day(0)
+    .format('MM-DD-YYYY');
+  var lastDate = moment(p_value, 'MM-DD-YYYY')
+    .day(6)
+    .format('MM-DD-YYYY');
+  $('#weeklyDatePicker').val(firstDate + ' - ' + lastDate);
+  $('#weeklyDatePicker').trigger('change');
+  if (selectedWeek) selectedWeek = moment(firstDate).week();
+  else {
+    selectedWeek = moment(firstDate).week();
+    currentWeek = selectedWeek;
+  }
+}

@@ -1,7 +1,6 @@
-"use strict";
+'use strict';
 
 export default {
-
   // User
   LOGIN: 'login',
   LOGIN_PENDING: 'login_pending',
@@ -29,9 +28,9 @@ export default {
   GET_LESSON_DATE_TIME: 'get_lesson_date_time',
 
   GET_HORSES: 'get_horses',
+  GET_HORSES_REPORT: 'get_horses_report',
   GET_ENROLLMENT_STATUSES: 'get_enrollment_statuses',
   GET_LESSON_PEOPLE: 'get_lesson_people',
   GET_LESSON_HORSES: 'get_lesson_horses',
   UPDATE_LESSON: 'update_lesson'
-
-}
+};

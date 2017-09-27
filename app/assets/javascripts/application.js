@@ -20,5 +20,7 @@
 //= require scheduler.min
 //= require bootstrap-select
 //= require bootstrap-timepicker
+//= require bootstrap-datepicker
+//= require bootstrap-datetimepicker.min
 //= require custom
 //= require my-custon

@@ -4,6 +4,9 @@
 .textItalic {
   font-style: italic;
 }
+.colorGreen {
+  color: rgb(168, 192, 72);
+}
 .addHorseRowWrap {
   float: left;
   position: relative;
@@ -164,6 +167,10 @@
   margin: 0 auto;
   vertical-align: middle;
 }
+.noHorseImg {
+  height: 25px;
+  width: 30px;
+}
 
 /*********************/
 /*   Media Query    */
@@ -204,5 +211,15 @@
   }
   .filterBoxWrap .filterBox .contentWrap img {
     max-width: 20%;
+  }
+
+  .horseTable td span {
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+  .horseTable > tbody > tr > td > img {
+    display: inline-block;
+    vertical-align: middle;
   }
 }

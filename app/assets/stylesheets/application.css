@@ -17,6 +17,11 @@
  *= require bootstrap.min
  *= require bootstrap-select.min
  *= require bootstrap-timepicker.min
+ *= require bootstrap-datetimepicker.min
+ *= require bootstrap-datepicker.min
+ *= require bootstrap-datepicker.standalone.min
+ *= require bootstrap-datepicker3.min
+ *= require bootstrap-datepicker3.standalone.min
  *= require fullcalendar.min
  *= require scheduler.min
  *= require style

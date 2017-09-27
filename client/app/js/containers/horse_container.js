@@ -10,19 +10,23 @@ class HorseContainer extends BaseComponent {
   constructor(props, context) {
     super(props, context);
     this.state = this.getState();
-    this._bind('addHorse', 'closeModal', 'afterValidation');
+    this._bind('addHorse', 'closeModal', 'afterValidation', 'onFilter');
   }
 
   getState() {
     //Optional - Set form initial data.
     return {
-      initialData: {},
+      initialData: {
+        horse_id: '',
+        week: ''
+      },
       openModel: false
     };
   }
 
   componentWillMount() {
     this.props.getHorses();
+    this.props.getHorsesReport(this.state.initialData);
   }
 
   closeModal() {
@@ -35,6 +39,16 @@ class HorseContainer extends BaseComponent {
 
   afterValidation(formValidations) {
     this.setState({ validations: formValidations });
+  }
+
+  onFilter(e) {
+    const initialData = this.state.initialData;
+    var key = e.target.name;
+    initialData[key] = e.target.value;
+
+    this.setState({ initialData }, function() {
+      this.props.getHorsesReport(initialData);
+    });
   }
 
   doSubmit(formData) {
@@ -58,9 +72,20 @@ class HorseContainer extends BaseComponent {
     return <div />;
   }
 
-  createHorsesDay(horse, day) {
-    if (horse.day === day) {
-      if (horse.count > 2) {
+  createHorsesDay(horseRecords, day) {
+    const horseIndex = _.findIndex(horseRecords, function(o) {
+      return o.day === day;
+    });
+
+    var horseRecord = '';
+    if (horseIndex >= 0) {
+      horseRecord = horseRecords[horseIndex];
+    } else {
+      horseRecord = [];
+    }
+
+    if (horseRecord.day === day && horseRecord !== []) {
+      if (horseRecord.count > 2) {
         return (
           <td>
             <img src={'/assets/hrseIcnGreenSmall.png'} className="" />
@@ -68,17 +93,19 @@ class HorseContainer extends BaseComponent {
           </td>
         );
       } else {
-        return (
-          <td>
-            <img src={'/assets/hrseIcnGreenSmall.png'} className="" />
-            <img src={'/assets/hrseIcnGreenSmall.png'} className="" />
-          </td>
-        );
+        var indents = [];
+        for (var i = 0; i < horseRecord.count; i++) {
+          indents.push(
+            <img key={i} src={'/assets/hrseIcnGreenSmall.png'} className="" />
+          );
+        }
+        console.log(indents);
+        return <td>{indents}</td>;
       }
     } else {
       return (
         <td>
-          <img src={'/assets/horseGreySmall.png'} className="" />
+          <img src={'/assets/noHorses.png'} className="noHorseImg" />
         </td>
       );
     }
@@ -86,6 +113,8 @@ class HorseContainer extends BaseComponent {
 
   render() {
     var horses = _.map(this.props.horses);
+    var week = _.map(this.props.week);
+    var horsesReport = _.map(this.props.horsesReport);
     return (
       <div className="rightMain">
         <div className="rmInr mCustomScrollbar" data-mcs-theme="dark">
@@ -130,19 +159,22 @@ class HorseContainer extends BaseComponent {
               <div className="loginCnt">
                 <div className="horseTableContainer">
                   <div className="filterRowWrap">
-                    <h2 className="filterTitle">
-                      Details For Aug 27-sept 2,2017
-                    </h2>
+                    <h2 className="filterTitle">Details For {week}</h2>
                     <div className="horseSelectBoxWrap">
                       <h5>Week</h5>
-
-                      <select className="form-control horseSelectBox">
-                        <option>Choose a Week</option>
-                        <option>Sept 24,2017 to Sept 30,2017</option>
-                        <option>Sept 14,2017 to Sept 23,2017</option>
-                        <option>Sept 10,2017 to Sept 16,2017</option>
-                        <option>Sept 3,2017 to Sept 9,2017</option>
-                      </select>
+                      <div className="form-group selectpicker">
+                        <div className="input-group" id="DateDemo">
+                          <input
+                            type="text"
+                            id="weeklyDatePicker"
+                            placeholder="Select Week"
+                            name="week"
+                            onBlur={e => {
+                              this.onFilter(e);
+                            }}
+                          />
+                        </div>
+                      </div>
                     </div>
                     <div className="filterBoxWrap">
                       <div className="filterBox">
@@ -212,18 +244,22 @@ class HorseContainer extends BaseComponent {
                       </div>
                     </div>
                   </div>
-                  <h2 className="filterTitle">
-                    Details For Aug 27-sept 2,2017
-                  </h2>
+                  <h2 className="filterTitle">Details For {week}</h2>
                   <div className="horseSelectBoxWrap">
                     <h5>Horse</h5>
-                    <select className="form-control horseSelectBox">
-                      <option>Choose a Horse</option>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
+                    <select
+                      className="form-control horseSelectBox selectpicker"
+                      onChange={e => {
+                        this.onFilter(e);
+                      }}
+                      name="horse_id"
+                    >
+                      <option value="">All</option>
+                      {horses.map(horse => (
+                        <option key={horse.id} value={horse.id}>
+                          {horse.horse_name}
+                        </option>
+                      ))}
                     </select>
                   </div>
                   <div className="table-responsive">
@@ -245,13 +281,13 @@ class HorseContainer extends BaseComponent {
                           <td className="text-uppercase columnTitle">FRI</td>
                           <td className="text-uppercase columnTitle">SAT</td>
                         </tr>
-                        {horses.map((horse, index) => (
+                        {horsesReport.map((horse, index) => (
                           <tr key={index}>
                             <td className="rowTitle">
                               <div className="iconWrap blueHorse">
                                 <img src={'/assets/hrseIcn.png'} className="" />
                               </div>
-                              <span>{horse.horse_name}</span>
+                              <span>{horse[0]['horse_name']}</span>
                             </td>
                             {this.createHorsesDay(horse, 'Sunday')}
                             {this.createHorsesDay(horse, 'Monday')}
@@ -263,7 +299,9 @@ class HorseContainer extends BaseComponent {
                           </tr>
                         ))}
                         <tr>
-                          <td className="textItalic">{horses.length} horses</td>
+                          <td className="textItalic">
+                            {horsesReport.length} horses
+                          </td>
                           <td colSpan="7" />
                         </tr>
                       </tbody>
@@ -339,12 +377,20 @@ class HorseContainer extends BaseComponent {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    horses: state.horses
+    horses: state.horses,
+    horsesReport: state.horsesReport && state.horsesReport.horses_report,
+    week: state.horsesReport && state.horsesReport.week
   };
 };
 
 function matchDispatchToProps(dispatch) {
-  return bindActionCreators({ getHorses: LessonAction.getHorses }, dispatch);
+  return bindActionCreators(
+    {
+      getHorses: LessonAction.getHorses,
+      getHorsesReport: LessonAction.getHorsesReport
+    },
+    dispatch
+  );
 }
 
 export default connect(mapStateToProps, matchDispatchToProps)(HorseContainer);
