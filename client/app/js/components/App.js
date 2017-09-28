@@ -11,16 +11,39 @@ export default class App extends React.Component {
     super();
     this.state = {
       title: "Welcome",
+      activeList: {
+        dashboard: '',
+        calender: 'active',
+        clients: '',
+        horses: '',
+        staff: '',
+        invoices: '',
+        reports: '',
+        logout: '',
+
+      },
       user: Settings.currentUser() || {}
     };
+    this.setActive = this.setActive.bind(this);
   }
 
   changeTitle(title) {
     this.setState({title});
   }
 
+  setActive(clickedItem) {
+    let activeList = this.state.activeList;
+    for(var key in activeList) {
+      activeList[key] = '';
+    }
+    activeList[clickedItem] = 'active';
+
+    this.setState({activeList: activeList});
+  }
+
   render() {
     var user = Settings.currentUser();
+    let { activeList } = this.state;
     return (
       <span>
         {user && user.id &&
@@ -36,14 +59,14 @@ export default class App extends React.Component {
                   <div className="leftMainMenu">
                     <div className="lmmInr mCustomScrollbar" data-mcs-theme="dark">
                       <ul>
-                        <li><Link to="dashboard"><img src="/assets/dashbrdIcn.png" alt="Menu Icons" /> Dashboard</Link></li>
-                        <li><Link to="calender" className="active"><img src="/assets/calIcn.png" alt="Menu Icons" /> Calendar</Link></li>
-                        <li><Link to="clients"><img src="/assets/clientIcn.png" alt="Menu Icons" /> Clients</Link></li>
-                        <li><Link to="horses"><img src="/assets/hrseIcn.png" alt="Menu Icons" /> Horses</Link></li>
-                        <li><Link to="staff"><img src="/assets/staffIcn.png" alt="Menu Icons" /> Staff</Link></li>
-                        <li><Link to="invoices"><img src="/assets/invoiceIcn.png" alt="Menu Icons" /> Invoices</Link></li>
-                        <li><Link to="reports"><img src="/assets/rprtsIcn.png" alt="Menu Icons" /> Reports</Link></li>
-                        <li><a href='/api/v1/sign_out' data-method="delete"><img src="/assets/staffIcn.png" alt="Menu Icons" /> Logout</a></li>
+                        <li onClick={() => this.setActive('dashboard')}><Link to="dashboard" className={activeList.dashboard}><img src="/assets/dashbrdIcn.png" alt="Menu Icons" /> Dashboard</Link></li>
+                        <li onClick={() => this.setActive('calender')}><Link to="calender" className={activeList.calender}><img src="/assets/calIcn.png" alt="Menu Icons" /> Calendar</Link></li>
+                        <li onClick={() => this.setActive('clients')}><Link to="clients" className={activeList.clients}><img src="/assets/clientIcn.png" alt="Menu Icons" /> Clients</Link></li>
+                        <li onClick={() => this.setActive('horses')}><Link to="horses" className={activeList.horses}><img src="/assets/hrseIcn.png" alt="Menu Icons" /> Horses</Link></li>
+                        <li onClick={() => this.setActive('staff')}><Link to="staff" className={activeList.staff}><img src="/assets/staffIcn.png" alt="Menu Icons" /> Staff</Link></li>
+                        <li onClick={() => this.setActive('invoices')}><Link to="invoices" className={activeList.invoices}><img src="/assets/invoiceIcn.png" alt="Menu Icons" /> Invoices</Link></li>
+                        <li onClick={() => this.setActive('reports')}><Link to="reports" className={activeList.reports}><img src="/assets/rprtsIcn.png" alt="Menu Icons" /> Reports</Link></li>
+                        <li onClick={() => this.setActive('logout')}><a href='/api/v1/sign_out' className={activeList.logout} data-method="delete"><img src="/assets/staffIcn.png" alt="Menu Icons" /> Logout</a></li>
                       </ul>
                     </div>
                   </div>
