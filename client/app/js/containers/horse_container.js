@@ -10,7 +10,9 @@ class HorseContainer extends BaseComponent {
   constructor(props, context) {
     super(props, context);
     this.state = this.getState();
+    // this.setNohoursCount = 0;
     this._bind('addHorse', 'closeModal', 'afterValidation', 'onFilter');
+    // this.averageOfNoHorse = this.averageOfNoHorse.bind(this);
   }
 
   getState() {
@@ -20,7 +22,10 @@ class HorseContainer extends BaseComponent {
         horse_id: '',
         week: ''
       },
-      openModel: false
+      openModel: false,
+      setNohoursCount: 0,
+      horsesReportCount: 0,
+      count: 0
     };
   }
 
@@ -28,6 +33,8 @@ class HorseContainer extends BaseComponent {
     this.props.getHorses();
     this.props.getHorsesReport(this.state.initialData);
   }
+
+  componentDidMount() {}
 
   closeModal() {
     this.setState({ openModel: false });
@@ -45,7 +52,6 @@ class HorseContainer extends BaseComponent {
     const initialData = this.state.initialData;
     var key = e.target.name;
     initialData[key] = e.target.value;
-
     this.setState({ initialData }, function() {
       this.props.getHorsesReport(initialData);
     });
@@ -81,6 +87,19 @@ class HorseContainer extends BaseComponent {
       }
     }
   }
+
+  averageOfNoHorse = callback => {
+    setTimeout(() => {
+      var noCount = document.getElementsByClassName('noHorseImg').length;
+      if (noCount) {
+        if (noCount <= 0) {
+          callback(0);
+        } else {
+          callback(noCount / 2);
+        }
+      }
+    });
+  };
 
   createHorsesDay(horseRecords, day) {
     const horseIndex = _.findIndex(horseRecords, function(o) {
@@ -120,12 +139,17 @@ class HorseContainer extends BaseComponent {
     }
   }
 
+  componentWillReceiveProps = () => {};
+
   render() {
     var horses = _.map(this.props.horses);
     var week = _.map(this.props.week);
     var horsesReport = _.map(this.props.horsesReport);
     var chartData = this.props.chartData;
-
+    horsesReport.map(
+      (horse, index) =>
+        (this.state.count = this.state.count + (7 - horse.length))
+    );
     var App = React.createClass({
       getInitialState() {
         return {
@@ -139,11 +163,20 @@ class HorseContainer extends BaseComponent {
       render() {
         return (
           <div>
-            <DonutChart value={this.state.donutval || 0} />
+            <DonutChart
+              isHorseUsedThisWeek={this.props.horseUse}
+              totalHorses={this.props.totalHorses}
+              value={this.state.donutval || 0}
+            />
           </div>
         );
       }
     });
+
+    // horsesReport.map(
+    //   (horse, index) =>
+    //     (this.state.count = this.state.count + (7 - horse.length))
+    // );
 
     const DonutChart = React.createClass({
       propTypes: {
@@ -159,6 +192,9 @@ class HorseContainer extends BaseComponent {
           size: 100,
           strokewidth: 7
         };
+      },
+      createMarkup() {
+        return { __html: '/' + this.props.totalHorses };
       },
       render() {
         const halfsize = this.props.size * 0.5;
@@ -203,6 +239,14 @@ class HorseContainer extends BaseComponent {
               style={{ textAnchor: 'middle' }}
             >
               <tspan className="donutchart-text-val">{this.props.value}</tspan>
+              {this.props.isHorseUsedThisWeek ? (
+                <tspan
+                  className="donutchart-text-val"
+                  dangerouslySetInnerHTML={this.createMarkup()}
+                />
+              ) : (
+                ''
+              )}
               <tspan
                 className="donutchart-text-label"
                 x={halfsize}
@@ -291,6 +335,8 @@ class HorseContainer extends BaseComponent {
                               chartData &&
                               chartData.filter_data.used_horse_count
                             }
+                            totalHorses={chartData && chartData.total_horses}
+                            horseUse="true"
                           />
                           <div id="main1" />
                         </div>
@@ -318,7 +364,13 @@ class HorseContainer extends BaseComponent {
                           </h4>
                         </div>
                         <div className="contentWrap">
-                          <App donutval={this.averageDayPerHorse(chartData)} />
+                          <App
+                            donutval={
+                              this.state.count /
+                              (chartData &&
+                                chartData.filter_data.used_horse_count)
+                            }
+                          />
                           <div id="main1" />
                         </div>
                       </div>
@@ -370,7 +422,7 @@ class HorseContainer extends BaseComponent {
                       ))}
                     </select>
                   </div>
-                  <div className="table-responsive">
+                  <div className="table-responsive hidden-xs">
                     <table className="table horseTable">
                       <thead className="headRow">
                         <tr>
@@ -390,7 +442,7 @@ class HorseContainer extends BaseComponent {
                           <td className="text-uppercase columnTitle">SAT</td>
                         </tr>
                         {horsesReport.map((horse, index) => (
-                          <tr key={index}>
+                          <tr key={index} data-status={horse[0]['horse_name']}>
                             <td className="rowTitle">
                               <div className="iconWrap blueHorse">
                                 <img src={'/assets/hrseIcn.png'} className="" />
@@ -404,6 +456,56 @@ class HorseContainer extends BaseComponent {
                             {this.createHorsesDay(horse, 'Thursday')}
                             {this.createHorsesDay(horse, 'Friday')}
                             {this.createHorsesDay(horse, 'Saturday')}
+                          </tr>
+                        ))}
+                        <tr>
+                          <td className="textItalic">
+                            {horsesReport.length} horses
+                          </td>
+                          <td colSpan="7" />
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="table-responsive visible-xs">
+                    <table className="table horseTable">
+                      <thead className="headRow">
+                        <tr>
+                          <th className="text-uppercase">lessons</th>
+                          <th colSpan="7" />
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {horsesReport.map((horse, index) => (
+                          <tr>
+                            <td className="rowTitle">
+                              <div className="iconWrap blueHorse">
+                                <img src={'/assets/hrseIcn.png'} className="" />
+                              </div>
+                              <span>{horse[0]['horse_name']}</span>
+                            </td>
+                            <td>
+                              <span className="colorGreen">{horse.length}</span>
+                              <img
+                                src={'/assets/hrseIcnGreenSmall.png'}
+                                className=""
+                              />
+                            </td>
+                            <td>
+                              <span>{7 - horse.length}</span>
+                              <img
+                                src={'/assets/noHorses.png'}
+                                className="noHorseImg"
+                              />
+                            </td>
+                            {/* <td>
+                              <a href="#" className="">
+                                <img
+                                  src={'/assets/calRghtIcnGry.png'}
+                                  className=""
+                                />
+                              </a>
+                            </td> */}
                           </tr>
                         ))}
                         <tr>
