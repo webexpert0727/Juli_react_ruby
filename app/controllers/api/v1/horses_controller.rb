@@ -39,17 +39,14 @@ class Api::V1::HorsesController < Api::V1::ApiController
 
     days = []
     record = []
-    day_off_count = 0
-      Date::DAYNAMES.each { |x| days << x }
-      days.each_with_index do |day,index|
-        horses_report.each do |horse|
-          if horse.day == day
-            record << horse.horse_id
-          elsif horse.day != day
-            day_off_count = day_off_count + 1
-          end
+    Date::DAYNAMES.each { |x| days << x }
+    days.each_with_index do |day,index|
+      horses_report.each do |horse|
+        if horse.day == day
+          record << horse.horse_id
         end
       end
+    end
     hwnd = 0
 
     record.uniq.each do |x|
@@ -68,7 +65,10 @@ class Api::V1::HorsesController < Api::V1::ApiController
         @horseJson[horse.horse_name] = [horse]
       end
     end
-
+    day_off_count = 0
+    @horseJson.each do |hj|
+      day_off_count = day_off_count + ( 7 - hj[1].length)
+    end
     render status: 200, json: { week: week, horses_report: @horseJson, chart_data: { more_than_10_count: more_than_10_count, horse_with_no_days_off: hwnd, day_off_count: day_off_count, total_horses: total_horses, filter_data: filter_data.first } }
   end
 
