@@ -10,9 +10,7 @@ class HorseContainer extends BaseComponent {
   constructor(props, context) {
     super(props, context);
     this.state = this.getState();
-    // this.setNohoursCount = 0;
     this._bind('addHorse', 'closeModal', 'afterValidation', 'onFilter');
-    // this.averageOfNoHorse = this.averageOfNoHorse.bind(this);
   }
 
   getState() {
@@ -24,8 +22,7 @@ class HorseContainer extends BaseComponent {
       },
       openModel: false,
       setNohoursCount: 0,
-      horsesReportCount: 0,
-      count: 0
+      horsesReportCount: 0
     };
   }
 
@@ -88,19 +85,6 @@ class HorseContainer extends BaseComponent {
     }
   }
 
-  averageOfNoHorse = callback => {
-    setTimeout(() => {
-      var noCount = document.getElementsByClassName('noHorseImg').length;
-      if (noCount) {
-        if (noCount <= 0) {
-          callback(0);
-        } else {
-          callback(noCount / 2);
-        }
-      }
-    });
-  };
-
   createHorsesDay(horseRecords, day) {
     const horseIndex = _.findIndex(horseRecords, function(o) {
       return o.day === day;
@@ -146,10 +130,6 @@ class HorseContainer extends BaseComponent {
     var week = _.map(this.props.week);
     var horsesReport = _.map(this.props.horsesReport);
     var chartData = this.props.chartData;
-    horsesReport.map(
-      (horse, index) =>
-        (this.state.count = this.state.count + (7 - horse.length))
-    );
     var App = React.createClass({
       getInitialState() {
         return {
@@ -172,11 +152,6 @@ class HorseContainer extends BaseComponent {
         );
       }
     });
-
-    // horsesReport.map(
-    //   (horse, index) =>
-    //     (this.state.count = this.state.count + (7 - horse.length))
-    // );
 
     const DonutChart = React.createClass({
       propTypes: {
@@ -364,13 +339,7 @@ class HorseContainer extends BaseComponent {
                           </h4>
                         </div>
                         <div className="contentWrap">
-                          <App
-                            donutval={
-                              this.state.count /
-                              (chartData &&
-                                chartData.filter_data.used_horse_count)
-                            }
-                          />
+                          <App donutval={this.averageDayPerHorse(chartData)}/>
                           <div id="main1" />
                         </div>
                       </div>
@@ -498,14 +467,6 @@ class HorseContainer extends BaseComponent {
                                 className="noHorseImg"
                               />
                             </td>
-                            {/* <td>
-                              <a href="#" className="">
-                                <img
-                                  src={'/assets/calRghtIcnGry.png'}
-                                  className=""
-                                />
-                              </a>
-                            </td> */}
                           </tr>
                         ))}
                         <tr>
