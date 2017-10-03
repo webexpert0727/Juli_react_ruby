@@ -6,13 +6,13 @@ import LessonAction from '../actions/lesson';
 import Modal from 'simple-react-modal';
 import BaseComponent from '../components/base_component';
 
+var flag = 0;
 class HorseContainer extends BaseComponent {
   constructor(props, context) {
     super(props, context);
     this.state = this.getState();
     this._bind('addHorse', 'closeModal', 'afterValidation', 'onFilter');
   }
-
   getState() {
     //Optional - Set form initial data.
     return {
@@ -24,10 +24,7 @@ class HorseContainer extends BaseComponent {
       setNohoursCount: 0,
       horsesReportCount: 0,
       isHorseSelected: false,
-      value: null,
-      i: 0,
-      startDate: new Date(),
-      endDate: new Date()
+      value: null
     };
   }
 
@@ -58,6 +55,7 @@ class HorseContainer extends BaseComponent {
     self.setState({isHorseSelected: true, initialData }, function() {
       this.props.getHorsesReport(initialData);
     });
+    flag = 0;
     this.setState({isHorseSelected: e.target.value ? true : false})
   }
 
@@ -91,12 +89,32 @@ class HorseContainer extends BaseComponent {
       }
     }
   }
-  checkHorseLoop(horse, week, parentIndex) {
+
+  generateBlankTr(horse, parentIndex){
     return (
-      <tr key={horse.horse_id}>
+      <tr key={horse.date}>
         { parentIndex === 0 && 
           <td className="rowTitle" rowSpan="7">
-            <div className="iconWrap blueHorse">
+            <div className="iconWrap greenHorse">
+              <img src={'/assets/hrseIcn.png'} className="" />
+            </div>
+              <span>{horse.horse_name}</span>
+          </td>
+        }
+        <td>{horse.date}</td>            
+        <td><img src={'/assets/noHorses.png'} className="noHorseImg" /></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    )
+  }
+  generateDataTr(horse, parentIndex, index) {
+    return (
+      <tr key={index}>
+        { parentIndex === 0 && 
+          <td className="rowTitle" rowSpan="7">
+            <div className="iconWrap greenHorse">
               <img src={'/assets/hrseIcn.png'} className="" />
             </div>
               <span>{horse.horse_name}</span>
@@ -104,8 +122,11 @@ class HorseContainer extends BaseComponent {
         }
         <td>{horse.scheduled_date}<br />{horse.start_time} - {horse.end_time}</td>
         <td>{horse.lesson_name}</td>
-        <td>{horse.instructor_name}</td>
-        <td>{"John doe"}</td>
+        <td>
+          <span className="user-icon redHorse"><img className="icon" src="/assets/staffIcn.png"/></span>
+          <span>{horse.instructor_name}</span>
+        </td>
+        <td>{"-"}</td>
         <td>{horse.lesson_notes}</td>
       </tr>
     )
@@ -162,10 +183,15 @@ class HorseContainer extends BaseComponent {
     var horsesReport = _.map(this.props.horsesReport);
     var horsesWeeklyReport = _.map(this.props.horsesWeeklyReport);
     var chartData = this.props.chartData;
+    var startDate = this.props.startDate;
+    var endDate = this.props.endDate;
+    var daysWorkedCount = this.props.daysWorkedCount;
+    var daysOffCount= this.props.daysOffCount;
+    
     var App = React.createClass({
       getInitialState() {
         return {
-          donutval: parseInt(this.props.donutval)
+          donutval: this.props.horseUse ?  parseInt(this.props.donutval) : parseFloat(parseFloat(this.props.donutval).toFixed(2))
         };
       },
       updateVal(e) {
@@ -550,65 +576,83 @@ class HorseContainer extends BaseComponent {
                           <tbody>
                             <tr>
                               <td className="columnTitle">Horse</td>
-                              <td className="text-uppercase columnTitle">Date and Time</td>
-                              <td className="text-uppercase columnTitle">Lesson Name</td>
-                              <td className="text-uppercase columnTitle">Instructor</td>
-                              <td className="text-uppercase columnTitle">Assigned To</td>
-                              <td className="text-uppercase columnTitle">Horse Notes</td>
+                              <td className="columnTitle">Date and Time</td>
+                              <td className="columnTitle">Lesson Name</td>
+                              <td className="columnTitle">Instructor</td>
+                              <td className="columnTitle">Assigned To</td>
+                              <td className="columnTitle">Horse Notes</td>
                             </tr>
                             { horsesWeeklyReport.map((horses, parentIndex) => (
-                              horses.map((horse, index) => (
-                                this.checkHorseLoop(horse, week, parentIndex)
-                              ))
+                              horses[0].date ? 
+                                (
+                                  this.generateBlankTr(horses[0], parentIndex)
+                                ) : 
+                                (
+                                  horses.map((horse, index) => (
+                                    this.generateDataTr(horse,parentIndex,index)
+                                  )
+                                )
+                              )
                             ))}
                           </tbody>
                         </table>
                       </div>
-                      <div className="table-responsive">
-                        <table className="table horseTable">
-                          <tbody>
-                            <tr>
-                              <td className="text-uppercase columnTitle">SUN</td>
-                              <td className="text-uppercase columnTitle">MON</td>
-                              <td className="text-uppercase columnTitle">TUE</td>
-                              <td className="text-uppercase columnTitle">WED</td>
-                              <td className="text-uppercase columnTitle">THU</td>
-                              <td className="text-uppercase columnTitle">FRI</td>
-                              <td className="text-uppercase columnTitle">SAT</td>
-                            </tr>
-                            {horsesReport.map((horse, index) => (
-                              <tr key={index} data-status={horse[0]['horse_name']}>
-                                {this.createHorsesDay(horse, 'Sunday')}
-                                {this.createHorsesDay(horse, 'Monday')}
-                                {this.createHorsesDay(horse, 'Tuesday')}
-                                {this.createHorsesDay(horse, 'Wednesday')}
-                                {this.createHorsesDay(horse, 'Thursday')}
-                                {this.createHorsesDay(horse, 'Friday')}
-                                {this.createHorsesDay(horse, 'Saturday')}
-                                <td>
-                                  Lessons
-                                </td>
-                                <td>
+                      <div className="filterBottomDetailWrap">
+                        <div className="FilterbottomTable">
+                          <div className="table-responsive">
+                            <table className="table horseTable">
+                              <tbody>
+                                <tr>
+                                  <td className="text-uppercase columnTitle">SUN</td>
+                                  <td className="text-uppercase columnTitle">MON</td>
+                                  <td className="text-uppercase columnTitle">TUE</td>
+                                  <td className="text-uppercase columnTitle">WED</td>
+                                  <td className="text-uppercase columnTitle">THU</td>
+                                  <td className="text-uppercase columnTitle">FRI</td>
+                                  <td className="text-uppercase columnTitle">SAT</td>
+                                </tr>
+                                {horsesReport.map((horse, index) => (
+                                  <tr key={index}>
+                                    {this.createHorsesDay(horse, 'Sunday')}
+                                    {this.createHorsesDay(horse, 'Monday')}
+                                    {this.createHorsesDay(horse, 'Tuesday')}
+                                    {this.createHorsesDay(horse, 'Wednesday')}
+                                    {this.createHorsesDay(horse, 'Thursday')}
+                                    {this.createHorsesDay(horse, 'Friday')}
+                                    {this.createHorsesDay(horse, 'Saturday')}
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div className="horseFilterDetail">
+                            <div className="blockRow">
+                              <span className="nameDetail">
+                                Lessons
+                              </span>
+                              <span className="numDetail">
                                 {chartData &&
-                                chartData.filter_data.total_lessons}
-                                  
-                                </td>
-                                <td>
-                                  Days Worked
-                                </td>
-                                <td>
-                                  {horse.length}
-                                </td>
-                                <td>
-                                  Days Off
-                                </td>
-                                <td>
-                                  {7 - horse.length}
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
+                                chartData.filter_data.total_lessons}                              
+                              </span>
+                            </div>
+                            <div className="blockRow">
+                              <span className="nameDetail">
+                                Days Worked
+                              </span>
+                              <span className="numDetail">
+                                {daysWorkedCount}
+                              </span>
+                            </div>
+                            <div className="blockRow">                            
+                              <span className="nameDetail">
+                                Days Off
+                              </span>
+                              <span className="numDetail">
+                                {daysOffCount}
+                              </span>
+                              </div>
+                        </div>
                       </div>
                     </div>
                   }
@@ -686,7 +730,11 @@ const mapStateToProps = (state, ownProps) => {
     horsesReport: state.horsesReport && state.horsesReport.horses_report,
     horsesWeeklyReport: state.horsesReport && state.horsesReport.horses_weekly_report,
     week: state.horsesReport && state.horsesReport.week,
-    chartData: state.horsesReport && state.horsesReport.chart_data
+    chartData: state.horsesReport && state.horsesReport.chart_data,
+    startDate: state.horsesReport && state.horsesReport.start_date,
+    endDate: state.horsesReport && state.horsesReport.end_date,
+    daysOffCount:  state.horsesReport && state.horsesReport.days_off_count,
+    daysWorkedCount:  state.horsesReport && state.horsesReport.days_worked_count
   };
 };
 

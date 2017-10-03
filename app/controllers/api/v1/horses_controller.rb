@@ -28,13 +28,16 @@ class Api::V1::HorsesController < Api::V1::ApiController
 
     if params[:week].present?
       start_date = parse_date(params[:week])
+      end_date = start_date + 7.days
       week = format_of_daterange(start_date, start_date + 6.days)
-      horses_report = horses_report.where("lesson_date_times.scheduled_date BETWEEN ? AND ?", start_date, start_date + 7.days)
-      filter_data = filter_data.where("lesson_date_times.scheduled_date BETWEEN ? AND ?", start_date, start_date + 7.days)
+      horses_report = horses_report.where("lesson_date_times.scheduled_date BETWEEN ? AND ?", start_date, end_date)
+      filter_data = filter_data.where("lesson_date_times.scheduled_date BETWEEN ? AND ?", start_date, end_date)
     else
       week = format_of_daterange(Date.today.beginning_of_week - 1.day, Date.today.end_of_week - 1.day)
-      horses_report = horses_report.where("lesson_date_times.scheduled_date BETWEEN ? AND ?", Date.today.beginning_of_week - 1.day, Date.today.end_of_week - 1.day)
-      filter_data = filter_data.where("lesson_date_times.scheduled_date BETWEEN ? AND ?", Date.today.beginning_of_week - 1.day, Date.today.end_of_week - 1.day)
+      start_date = Date.today.beginning_of_week - 1.day
+      end_date = Date.today.end_of_week - 1.day
+      horses_report = horses_report.where("lesson_date_times.scheduled_date BETWEEN ? AND ?", start_date, end_date)
+      filter_data = filter_data.where("lesson_date_times.scheduled_date BETWEEN ? AND ?", start_date, end_date)
     end
 
     days = []
@@ -65,19 +68,33 @@ class Api::V1::HorsesController < Api::V1::ApiController
         @horseJson[horse.horse_name] = [horse]
       end
     end
+
     @horseWeeklyJson = {}
-    horses_report.each do |horse|
-      if @horseWeeklyJson.key?(horse.scheduled_date)
-        @horseWeeklyJson[horse.scheduled_date] << horse
-      else
-        @horseWeeklyJson[horse.scheduled_date] = [horse]
+    scheduled_date_array = horses_report.pluck(:scheduled_date).map(&:to_date)
+    (start_date..end_date).each do |date|
+      horses_report.each do |horse|
+        if scheduled_date_array.include? date
+          if @horseWeeklyJson.key?(horse.scheduled_date)
+            # @horseWeeklyJson[horse.scheduled_date] << horse
+          else
+            @horseWeeklyJson[horse.scheduled_date] = [horse]
+          end
+        else
+          @horseWeeklyJson[date.strftime('%a, %b %d,%Y')] = [{date:date.strftime('%a, %b %d,%Y'),horse_name: horse.horse_name}] unless @horseWeeklyJson.key?(date)
+        end
       end
     end
-    day_off_count = 0
+
+    @horseWeeklyJson = @horseWeeklyJson.sort_by { |k|[Date.strptime(k[0],"%a, %b %d,%Y")]}.to_h
+
+
+    day_off_count = days_worked_count = days_off_count = 0
     @horseJson.each do |hj|
       day_off_count = day_off_count + ( 7 - hj[1].length)
+      days_worked_count = days_worked_count + (hj[1].length)
+      days_off_count = days_off_count + ( 7 - hj[1].length)
     end
-    render status: 200, json: { week: week, horses_report: @horseJson,horses_weekly_report: @horseWeeklyJson,chart_data: { more_than_10_count: more_than_10_count, horse_with_no_days_off: hwnd, day_off_count: day_off_count, total_horses: total_horses, filter_data: filter_data.first } }
+    render status: 200, json: { week: week, horses_report: @horseJson,horses_weekly_report: @horseWeeklyJson,days_worked_count: days_worked_count,days_off_count: days_off_count,chart_data: { more_than_10_count: more_than_10_count, horse_with_no_days_off: hwnd, day_off_count: day_off_count, total_horses: total_horses, filter_data: filter_data.first } }
   end
 
   def create

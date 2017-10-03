@@ -155,17 +155,21 @@
   text-align: center;
   padding: 1px 5px;
 }
-.horseTable .rowTitle .iconWrap.blueHorse {
+.blueHorse {
   background-color: #a9e9f9;
   border: 1px solid #5cc9d9;
 }
-.horseTable .rowTitle .iconWrap.cinnamonHorse {
+.cinnamonHorse {
   background-color: #fab9b8;
   border: 1px solid #ef5c5c;
 }
-.horseTable .rowTitle .iconWrap.greenHorse {
+.greenHorse {
   background-color: #78dd9f;
   border: 1px solid #40c89c;
+}
+.redHorse{
+  background-color: #FA907F;
+  border: 1px solid #DF5A51;
 }
 .horseTable .rowTitle span {
   display: inline-block;
@@ -227,6 +231,56 @@
 .donutchart-text-label {
   font-size: 9px;
 } */
+.filterBottomDetailWrap{
+  display: flex;
+  background-color: #fff;
+  padding: 25px;
+}
+.FilterbottomTable{
+  display: block;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;  
+  margin-right: 20px;
+  width: calc(100% - 250px);
+}
+.FilterbottomTable div .table > tbody{
+  padding: 20px;
+}
+.FilterbottomTable .table > tbody > tr > td{
+  border-top-color: #ccc;
+}
+.horseFilterDetail{
+  display: block;
+  border: 1px solid #ccc;
+  min-width: 235px;
+  background-color: #fff;
+  padding: 0 20px;
+}
+.horseFilterDetail .blockRow{
+  padding: 5px 0;
+  border-bottom: 1px solid #ccc;
+}
+.horseFilterDetail .blockRow:last-child{
+  border-bottom: none;
+}
+.horseFilterDetail .blockRow .nameDetail{
+  line-height: 30px;
+}
+.horseFilterDetail .blockRow .numDetail{
+  font-size: 22px;
+  font-weight: bold;
+  float: right;
+  padding-right: 5px;
+}
+.horseTable .user-icon{
+  border-radius: 50%;
+  padding: 6px;
+  margin-right: 5px;
+}
+.horseTable .user-icon img{
+  vertical-align: middle;
+}
 
 /*********************/
 /*   Media Query    */
@@ -294,5 +348,26 @@
   }
   .donutchart {
     float: left;
+  }
+  .filterBottomDetailWrap{
+    padding: 15px;
+    display: block;
+  }
+  .FilterbottomTable .horseTable > tbody > tr > td > img{
+    display: block;
+  }
+  .FilterbottomTable .table-responsive{
+    border:none;
+  }
+  .FilterbottomTable {
+    display: block;
+    margin-right: 0px;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .horseFilterDetail {
+    display: block;
+    min-width: 100%;
+    padding: 0 20px;
   }
 }
