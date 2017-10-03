@@ -127,15 +127,22 @@ class HorseContainer extends BaseComponent {
       if (horseRecord.count > 2) {
         return (
           <td>
-            <img src={'/assets/hrseIcnGreenSmall.png'} className="" />
-            <img src={'/assets/hrseIcnGreenPlus.png'} className="" />
+            <img src={'/assets/horseGreenBig.png'} className="horseGreenBig" />
+            <img
+              src={'/assets/horseGreenAddBig.png'}
+              className="horseAddIcon"
+            />
           </td>
         );
       } else {
         var indents = [];
         for (var i = 0; i < horseRecord.count; i++) {
           indents.push(
-            <img key={i} src={'/assets/hrseIcnGreenSmall.png'} className="" />
+            <img
+              key={i}
+              src={'/assets/horseGreenBig.png'}
+              className="horseGreenBig"
+            />
           );
         }
         return <td>{indents}</td>;
@@ -191,7 +198,7 @@ class HorseContainer extends BaseComponent {
           value: 0,
           valuelabel: 'Completed',
           size: 100,
-          strokewidth: 7
+          strokewidth: 10
         };
       },
       createMarkup() {
@@ -331,6 +338,11 @@ class HorseContainer extends BaseComponent {
                           </h4>
                         </div>
                         <div className="contentWrap">
+                          <img
+                            src={'/assets/chart-horse.png'}
+                            className="chartHorseIcon"
+                          />
+
                           <App
                             donutval={
                               chartData &&
@@ -349,6 +361,10 @@ class HorseContainer extends BaseComponent {
                           </h4>
                         </div>
                         <div className="contentWrap">
+                          <img
+                            src={'/assets/chart-horse.png'}
+                            className="chartHorseIcon"
+                          />
                           <App
                             donutval={
                               chartData &&
@@ -365,7 +381,11 @@ class HorseContainer extends BaseComponent {
                           </h4>
                         </div>
                         <div className="contentWrap">
-                          <App donutval={this.averageDayPerHorse(chartData)}/>
+                          <img
+                            src={'/assets/chart-horse.png'}
+                            className="chartHorseIcon"
+                          />
+                          <App donutval={this.averageDayPerHorse(chartData)} />
                           <div id="main1" />
                         </div>
                       </div>
@@ -376,6 +396,11 @@ class HorseContainer extends BaseComponent {
                           </h4>
                         </div>
                         <div className="contentWrap">
+                          <img
+                            src={'/assets/chart-horse.png'}
+                            className="chartHorseIcon"
+                          />
+
                           <App
                             donutval={
                               chartData && chartData.horse_with_no_days_off
@@ -391,6 +416,10 @@ class HorseContainer extends BaseComponent {
                           </h4>
                         </div>
                         <div className="contentWrap">
+                          <img
+                            src={'/assets/chart-horse.png'}
+                            className="chartHorseIcon"
+                          />
                           <App
                             donutval={chartData && chartData.more_than_10_count}
                           />

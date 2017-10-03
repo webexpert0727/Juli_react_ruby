@@ -84,6 +84,15 @@
 .filterBoxWrap .filterBox .contentWrap {
   background-color: #fff;
   padding: 15px 50px;
+  position: relative;
+}
+.filterBoxWrap .filterBox .contentWrap .chartHorseIcon {
+  position: absolute;
+  top: 25%;
+  margin: 0 auto;
+  vertical-align: middle;
+  left: 45%;
+  height: 30px;
 }
 .horseTableContainer .filterTitle {
   font-size: 26px;
@@ -167,9 +176,15 @@
   margin: 0 auto;
   vertical-align: middle;
 }
-.noHorseImg {
-  height: 25px;
-  width: 30px;
+.horseTable .horseGreenBig {
+  height: 30px;
+}
+.horseTable .horseAddIcon {
+  height: 35px;
+}
+.horseTable .noHorseImg {
+  height: 30px;
+  width: 35px;
 }
 
 .donutchart-track {
@@ -199,25 +214,26 @@
 }
 
 .donutchart-text {
-  font-family: 'Roboto';
-  fill: #607580;
+  fill: #4e4e4e;
+  font-size: 16px;
+  transform: translateY(25px);
 }
 .donutchart-text-val {
-  font-size: 42px;
+  font-size: 24px;
 }
-.donutchart-text-percent {
+/* .donutchart-text-percent {
   font-size: 20px;
 }
 .donutchart-text-label {
   font-size: 9px;
-}
+} */
 
 /*********************/
 /*   Media Query    */
 /*********************/
 @media only screen and (max-width: 1380px) {
   .filterBoxWrap .filterBox .contentWrap {
-    padding: 5px 40px;
+    padding: 10px 40px;
   }
 }
 @media only screen and (max-width: 1200px) {
@@ -232,10 +248,16 @@
   .filterBoxWrap .filterBox .contentWrap {
     padding: 5px 30px;
   }
+  .filterBoxWrap .filterBox .titleBar {
+    min-height: 40px;
+  }
 }
 @media only screen and (max-width: 1024px) {
   .filterBoxWrap .filterBox .contentWrap {
-    padding: 5px 20px;
+    padding: 5px 10px;
+  }
+  .filterBoxWrap .filterBox .contentWrap .chartHorseIcon {
+    left: 38%;
   }
 }
 @media only screen and (max-width: 767px) {
@@ -244,6 +266,10 @@
   }
   .addHorses {
     width: 100%;
+  }
+  .horseTableContainer .filterTitle {
+    font-size: 20px;
+    margin-bottom: 5px;
   }
   .filterBoxWrap .filterBox {
     width: 100%;
@@ -261,5 +287,12 @@
   .horseTable > tbody > tr > td > img {
     display: inline-block;
     vertical-align: middle;
+  }
+  .filterBoxWrap .filterBox .contentWrap .chartHorseIcon {
+    left: 45px;
+    top: 25px;
+  }
+  .donutchart {
+    float: left;
   }
 }
