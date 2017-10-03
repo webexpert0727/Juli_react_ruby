@@ -8,9 +8,9 @@ class Api::V1::HorsesController < Api::V1::ApiController
 
   def horses_report
     horses_report = LessonDateTimeHorse.select(
-      "lesson_date_time_horses.horse_id as horse_id,  DAYNAME(lesson_date_times.scheduled_date) as day, count(*) as count, horses.horse_name as horse_name"
+      "lesson_date_time_horses.horse_id as horse_id,lesson_date_times.name as lesson_name,instructor_name as instructor_name, lesson_date_times.lesson_notes,DATE_FORMAT(lesson_date_times.scheduled_date,'%a, %b %d,%Y') as scheduled_date,DATE_FORMAT(lesson_date_times.scheduled_starttime,'%I %i %p') as start_time,DATE_FORMAT(lesson_date_times.scheduled_endtime,'%I %i %p') as end_time, DAYNAME(lesson_date_times.scheduled_date) as day,count(*) as count, horses.horse_name as horse_name"
     ).joins(
-      :horse, :lesson_date_time
+      :horse, :lesson_date_time => :instructor
     ).group(
       "DAYNAME(lesson_date_times.scheduled_date), lesson_date_time_horses.horse_id")
     .order(
@@ -65,11 +65,19 @@ class Api::V1::HorsesController < Api::V1::ApiController
         @horseJson[horse.horse_name] = [horse]
       end
     end
+    @horseWeeklyJson = {}
+    horses_report.each do |horse|
+      if @horseWeeklyJson.key?(horse.scheduled_date)
+        @horseWeeklyJson[horse.scheduled_date] << horse
+      else
+        @horseWeeklyJson[horse.scheduled_date] = [horse]
+      end
+    end
     day_off_count = 0
     @horseJson.each do |hj|
       day_off_count = day_off_count + ( 7 - hj[1].length)
     end
-    render status: 200, json: { week: week, horses_report: @horseJson, chart_data: { more_than_10_count: more_than_10_count, horse_with_no_days_off: hwnd, day_off_count: day_off_count, total_horses: total_horses, filter_data: filter_data.first } }
+    render status: 200, json: { week: week, horses_report: @horseJson,horses_weekly_report: @horseWeeklyJson,chart_data: { more_than_10_count: more_than_10_count, horse_with_no_days_off: hwnd, day_off_count: day_off_count, total_horses: total_horses, filter_data: filter_data.first } }
   end
 
   def create

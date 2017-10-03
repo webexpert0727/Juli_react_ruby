@@ -22,7 +22,12 @@ class HorseContainer extends BaseComponent {
       },
       openModel: false,
       setNohoursCount: 0,
-      horsesReportCount: 0
+      horsesReportCount: 0,
+      isHorseSelected: false,
+      value: null,
+      i: 0,
+      startDate: new Date(),
+      endDate: new Date()
     };
   }
 
@@ -46,12 +51,14 @@ class HorseContainer extends BaseComponent {
   }
 
   onFilter(e) {
-    const initialData = this.state.initialData;
+    var self = this
+    const initialData = self.state.initialData;
     var key = e.target.name;
     initialData[key] = e.target.value;
-    this.setState({ initialData }, function() {
+    self.setState({isHorseSelected: true, initialData }, function() {
       this.props.getHorsesReport(initialData);
     });
+    this.setState({isHorseSelected: e.target.value ? true : false})
   }
 
   doSubmit(formData) {
@@ -83,6 +90,25 @@ class HorseContainer extends BaseComponent {
         return chartData.day_off_count / chartData.filter_data.used_horse_count;
       }
     }
+  }
+  checkHorseLoop(horse, week, parentIndex) {
+    return (
+      <tr key={horse.horse_id}>
+        { parentIndex === 0 && 
+          <td className="rowTitle" rowSpan="7">
+            <div className="iconWrap blueHorse">
+              <img src={'/assets/hrseIcn.png'} className="" />
+            </div>
+              <span>{horse.horse_name}</span>
+          </td>
+        }
+        <td>{horse.scheduled_date}<br />{horse.start_time} - {horse.end_time}</td>
+        <td>{horse.lesson_name}</td>
+        <td>{horse.instructor_name}</td>
+        <td>{"John doe"}</td>
+        <td>{horse.lesson_notes}</td>
+      </tr>
+    )
   }
 
   createHorsesDay(horseRecords, day) {
@@ -123,12 +149,11 @@ class HorseContainer extends BaseComponent {
     }
   }
 
-  componentWillReceiveProps = () => {};
-
   render() {
     var horses = _.map(this.props.horses);
     var week = _.map(this.props.week);
     var horsesReport = _.map(this.props.horsesReport);
+    var horsesWeeklyReport = _.map(this.props.horsesWeeklyReport);
     var chartData = this.props.chartData;
     var App = React.createClass({
       getInitialState() {
@@ -149,6 +174,7 @@ class HorseContainer extends BaseComponent {
               value={this.state.donutval || 0}
             />
           </div>
+          
         );
       }
     });
@@ -391,93 +417,172 @@ class HorseContainer extends BaseComponent {
                       ))}
                     </select>
                   </div>
-                  <div className="table-responsive hidden-xs">
-                    <table className="table horseTable">
-                      <thead className="headRow">
-                        <tr>
-                          <th className="text-uppercase">lessons</th>
-                          <th colSpan="7" />
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td className="columnTitle">Horse</td>
-                          <td className="text-uppercase columnTitle">SUN</td>
-                          <td className="text-uppercase columnTitle">MON</td>
-                          <td className="text-uppercase columnTitle">TUE</td>
-                          <td className="text-uppercase columnTitle">WED</td>
-                          <td className="text-uppercase columnTitle">THU</td>
-                          <td className="text-uppercase columnTitle">FRI</td>
-                          <td className="text-uppercase columnTitle">SAT</td>
-                        </tr>
-                        {horsesReport.map((horse, index) => (
-                          <tr key={index} data-status={horse[0]['horse_name']}>
-                            <td className="rowTitle">
-                              <div className="iconWrap blueHorse">
-                                <img src={'/assets/hrseIcn.png'} className="" />
-                              </div>
-                              <span>{horse[0]['horse_name']}</span>
-                            </td>
-                            {this.createHorsesDay(horse, 'Sunday')}
-                            {this.createHorsesDay(horse, 'Monday')}
-                            {this.createHorsesDay(horse, 'Tuesday')}
-                            {this.createHorsesDay(horse, 'Wednesday')}
-                            {this.createHorsesDay(horse, 'Thursday')}
-                            {this.createHorsesDay(horse, 'Friday')}
-                            {this.createHorsesDay(horse, 'Saturday')}
-                          </tr>
-                        ))}
-                        <tr>
-                          <td className="textItalic">
-                            {horsesReport.length} horses
-                          </td>
-                          <td colSpan="7" />
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div className="table-responsive visible-xs">
-                    <table className="table horseTable">
-                      <thead className="headRow">
-                        <tr>
-                          <th className="text-uppercase">lessons</th>
-                          <th colSpan="7" />
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {horsesReport.map((horse, index) => (
-                          <tr>
-                            <td className="rowTitle">
-                              <div className="iconWrap blueHorse">
-                                <img src={'/assets/hrseIcn.png'} className="" />
-                              </div>
-                              <span>{horse[0]['horse_name']}</span>
-                            </td>
-                            <td>
-                              <span className="colorGreen">{horse.length}</span>
-                              <img
-                                src={'/assets/hrseIcnGreenSmall.png'}
-                                className=""
-                              />
-                            </td>
-                            <td>
-                              <span>{7 - horse.length}</span>
-                              <img
-                                src={'/assets/noHorses.png'}
-                                className="noHorseImg"
-                              />
-                            </td>
-                          </tr>
-                        ))}
-                        <tr>
-                          <td className="textItalic">
-                            {horsesReport.length} horses
-                          </td>
-                          <td colSpan="7" />
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                  {!this.state.isHorseSelected && 
+                    <div>
+                      <div className="table-responsive hidden-xs">
+                        <table className="table horseTable">
+                          <thead className="headRow">
+                            <tr>
+                              <th className="text-uppercase">lessons</th>
+                              <th colSpan="7" />
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td className="columnTitle">Horse</td>
+                              <td className="text-uppercase columnTitle">SUN</td>
+                              <td className="text-uppercase columnTitle">MON</td>
+                              <td className="text-uppercase columnTitle">TUE</td>
+                              <td className="text-uppercase columnTitle">WED</td>
+                              <td className="text-uppercase columnTitle">THU</td>
+                              <td className="text-uppercase columnTitle">FRI</td>
+                              <td className="text-uppercase columnTitle">SAT</td>
+                            </tr>
+                            {horsesReport.map((horse, index) => (
+                              <tr key={index} data-status={horse[0]['horse_name']}>
+                                <td className="rowTitle">
+                                  <div className="iconWrap blueHorse">
+                                    <img src={'/assets/hrseIcn.png'} className="" />
+                                  </div>
+                                  <span>{horse[0]['horse_name']}</span>
+                                </td>
+                                {this.createHorsesDay(horse, 'Sunday')}
+                                {this.createHorsesDay(horse, 'Monday')}
+                                {this.createHorsesDay(horse, 'Tuesday')}
+                                {this.createHorsesDay(horse, 'Wednesday')}
+                                {this.createHorsesDay(horse, 'Thursday')}
+                                {this.createHorsesDay(horse, 'Friday')}
+                                {this.createHorsesDay(horse, 'Saturday')}
+                              </tr>
+                            ))}
+                            <tr>
+                              <td className="textItalic">
+                                {horsesReport.length} horses
+                              </td>
+                              <td colSpan="7" />
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className="table-responsive visible-xs">
+                        <table className="table horseTable">
+                          <thead className="headRow">
+                            <tr>
+                              <th className="text-uppercase">lessons</th>
+                              <th colSpan="7" />
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {horsesReport.map((horse, index) => (
+                              <tr key={index}>
+                                <td className="rowTitle">
+                                  <div className="iconWrap blueHorse">
+                                    <img src={'/assets/hrseIcn.png'} className="" />
+                                  </div>
+                                  <span>{horse[0]['horse_name']}</span>
+                                </td>
+                                <td>
+                                  <span className="colorGreen">{horse.length}</span>
+                                  <img
+                                    src={'/assets/hrseIcnGreenSmall.png'}
+                                    className=""
+                                  />
+                                </td>
+                                <td>
+                                  <span>{7 - horse.length}</span>
+                                  <img
+                                    src={'/assets/noHorses.png'}
+                                    className="noHorseImg"
+                                  />
+                                </td>
+                              </tr>
+                            ))}
+                            <tr>
+                              <td className="textItalic">
+                                {horsesReport.length} horses
+                              </td>
+                              <td colSpan="7" />
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  }
+                  {this.state.isHorseSelected && 
+                    <div>
+                      <div className="table-responsive">
+                        <table className="table horseTable">
+                          <thead className="headRow">
+                            <tr>
+                              <th className="text-uppercase">lessons</th>
+                              <th colSpan="7" />
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td className="columnTitle">Horse</td>
+                              <td className="text-uppercase columnTitle">Date and Time</td>
+                              <td className="text-uppercase columnTitle">Lesson Name</td>
+                              <td className="text-uppercase columnTitle">Instructor</td>
+                              <td className="text-uppercase columnTitle">Assigned To</td>
+                              <td className="text-uppercase columnTitle">Horse Notes</td>
+                            </tr>
+                            { horsesWeeklyReport.map((horses, parentIndex) => (
+                              horses.map((horse, index) => (
+                                this.checkHorseLoop(horse, week, parentIndex)
+                              ))
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className="table-responsive">
+                        <table className="table horseTable">
+                          <tbody>
+                            <tr>
+                              <td className="text-uppercase columnTitle">SUN</td>
+                              <td className="text-uppercase columnTitle">MON</td>
+                              <td className="text-uppercase columnTitle">TUE</td>
+                              <td className="text-uppercase columnTitle">WED</td>
+                              <td className="text-uppercase columnTitle">THU</td>
+                              <td className="text-uppercase columnTitle">FRI</td>
+                              <td className="text-uppercase columnTitle">SAT</td>
+                            </tr>
+                            {horsesReport.map((horse, index) => (
+                              <tr key={index} data-status={horse[0]['horse_name']}>
+                                {this.createHorsesDay(horse, 'Sunday')}
+                                {this.createHorsesDay(horse, 'Monday')}
+                                {this.createHorsesDay(horse, 'Tuesday')}
+                                {this.createHorsesDay(horse, 'Wednesday')}
+                                {this.createHorsesDay(horse, 'Thursday')}
+                                {this.createHorsesDay(horse, 'Friday')}
+                                {this.createHorsesDay(horse, 'Saturday')}
+                                <td>
+                                  Lessons
+                                </td>
+                                <td>
+                                {chartData &&
+                                chartData.filter_data.total_lessons}
+                                  
+                                </td>
+                                <td>
+                                  Days Worked
+                                </td>
+                                <td>
+                                  {horse.length}
+                                </td>
+                                <td>
+                                  Days Off
+                                </td>
+                                <td>
+                                  {7 - horse.length}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  }
                 </div>
               </div>
             </div>
@@ -550,6 +655,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     horses: state.horses,
     horsesReport: state.horsesReport && state.horsesReport.horses_report,
+    horsesWeeklyReport: state.horsesReport && state.horsesReport.horses_weekly_report,
     week: state.horsesReport && state.horsesReport.week,
     chartData: state.horsesReport && state.horsesReport.chart_data
   };
