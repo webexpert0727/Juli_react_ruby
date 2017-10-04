@@ -56,7 +56,7 @@ class HorseContainer extends BaseComponent {
       this.props.getHorsesReport(initialData);
     });
     flag = 0;
-    this.setState({isHorseSelected: e.target.value ? true : false})
+    this.setState({isHorseSelected: initialData.horse_id  ? true : false})
   }
 
   doSubmit(formData) {
@@ -94,14 +94,14 @@ class HorseContainer extends BaseComponent {
     return (
       <tr key={horse.date}>
         { parentIndex === 0 && 
-          <td className="rowTitle" rowSpan="7">
+          <td className="rowTitle titleTop" rowSpan="7">
             <div className="iconWrap greenHorse">
               <img src={'/assets/hrseIcn.png'} className="" />
             </div>
               <span>{horse.horse_name}</span>
           </td>
         }
-        <td>{horse.date}</td>            
+        <td className="fBold">{horse.date}</td>
         <td><img src={'/assets/noHorses.png'} className="noHorseImg" /></td>
         <td></td>
         <td></td>
@@ -113,15 +113,15 @@ class HorseContainer extends BaseComponent {
     return (
       <tr key={index}>
         { parentIndex === 0 && 
-          <td className="rowTitle" rowSpan="7">
+          <td className="rowTitle titleTop" rowSpan="7">
             <div className="iconWrap greenHorse">
               <img src={'/assets/hrseIcn.png'} className="" />
             </div>
               <span>{horse.horse_name}</span>
           </td>
         }
-        <td>{horse.scheduled_date}<br />{horse.start_time} - {horse.end_time}</td>
-        <td>{horse.lesson_name}</td>
+        <td><span className="fBold">{horse.scheduled_date}</span><br />{horse.start_time} - {horse.end_time}</td>
+        <td className="fBold tableLessonName">{horse.lesson_name}</td>
         <td>
           <span className="user-icon redHorse"><img className="icon" src="/assets/staffIcn.png"/></span>
           <span>{horse.instructor_name}</span>
@@ -352,6 +352,7 @@ class HorseContainer extends BaseComponent {
                             onBlur={e => {
                               this.onFilter(e);
                             }}
+                            className="weeklyDatepicker"
                           />
                         </div>
                       </div>

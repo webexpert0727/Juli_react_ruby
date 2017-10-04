@@ -7,6 +7,9 @@
 .colorGreen {
   color: rgb(168, 192, 72);
 }
+.fBold{
+  font-weight: bold;
+}
 .addHorseRowWrap {
   float: left;
   position: relative;
@@ -91,7 +94,7 @@
   top: 25%;
   margin: 0 auto;
   vertical-align: middle;
-  left: 45%;
+  left: 43%;
   height: 30px;
 }
 .horseTableContainer .filterTitle {
@@ -136,9 +139,14 @@
 }
 .horseTable > tbody > tr > td {
   background-color: #fff !important;
+  font-size: 14px;
+}
+.horseTable > tbody > tr > td.tableLessonName{
+  font-size: 16px;
+  text-decoration: underline;
 }
 .horseTable > tbody > tr > td.columnTitle {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
 }
 .horseTable > tbody > tr > td > img {
@@ -190,7 +198,24 @@
   height: 30px;
   width: 35px;
 }
+.horseTable .user-icon{
+  border-radius: 50%;
+  padding: 6px;
+  margin-right: 5px;
+}
+.horseTable .user-icon img{
+  vertical-align: text-top;
+}
+.horseTable > tbody > tr > td.titleTop{
+  vertical-align: top;
+}
+.horseTable > tbody > tr > td.fBold,
+.horseTable > tbody > tr > td span.fBold{
+  font-size: 16px;
+}
 
+
+/* chart css start */
 .donutchart-track {
   fill: transparent;
   stroke: #dae2e5;
@@ -273,13 +298,17 @@
   float: right;
   padding-right: 5px;
 }
-.horseTable .user-icon{
-  border-radius: 50%;
-  padding: 6px;
-  margin-right: 5px;
+/* chart css end */
+
+#DateDemo .bootstrap-datetimepicker-widget table thead tr:first-child th .glyphicon-chevron-left:before{
+  content: "\2039";
+  font-size: 34px;
+  line-height: 12px;
 }
-.horseTable .user-icon img{
-  vertical-align: middle;
+#DateDemo .bootstrap-datetimepicker-widget table thead tr:first-child th .glyphicon-chevron-right:before{
+  content: "\203A";
+  font-size: 34px;
+  line-height: 12px;
 }
 
 /*********************/
@@ -332,7 +361,6 @@
   .filterBoxWrap .filterBox .contentWrap img {
     max-width: 20%;
   }
-
   .horseTable td span {
     display: inline-block;
     margin-right: 10px;
@@ -342,12 +370,11 @@
     display: inline-block;
     vertical-align: middle;
   }
-  .filterBoxWrap .filterBox .contentWrap .chartHorseIcon {
-    left: 45px;
-    top: 25px;
+  .filterBoxWrap .filterBox .contentWrap .chartHorseIcon{
+    left: 48%;
   }
-  .donutchart {
-    float: left;
+  .filterBoxWrap .filterBox .titleBar{
+    min-height: auto;
   }
   .filterBottomDetailWrap{
     padding: 15px;
@@ -369,5 +396,15 @@
     display: block;
     min-width: 100%;
     padding: 0 20px;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .filterBoxWrap .filterBox .contentWrap .chartHorseIcon{
+    left: 46%;
+  }
+}
+@media only screen and (max-width: 360px) {
+  .filterBoxWrap .filterBox .contentWrap .chartHorseIcon{
+    left: 45%;
   }
 }

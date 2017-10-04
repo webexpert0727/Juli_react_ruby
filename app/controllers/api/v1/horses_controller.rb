@@ -28,7 +28,7 @@ class Api::V1::HorsesController < Api::V1::ApiController
 
     if params[:week].present?
       start_date = parse_date(params[:week])
-      end_date = start_date + 7.days
+      end_date = start_date + 6.days
       week = format_of_daterange(start_date, start_date + 6.days)
       horses_report = horses_report.where("lesson_date_times.scheduled_date BETWEEN ? AND ?", start_date, end_date)
       filter_data = filter_data.where("lesson_date_times.scheduled_date BETWEEN ? AND ?", start_date, end_date)
@@ -71,7 +71,7 @@ class Api::V1::HorsesController < Api::V1::ApiController
 
     @horseWeeklyJson = {}
     scheduled_date_array = horses_report.pluck(:scheduled_date).map(&:to_date)
-    (start_date..end_date).each do |date|
+    (start_date.to_datetime..end_date.to_datetime).each do |date|
       horses_report.each do |horse|
         if scheduled_date_array.include? date
           if @horseWeeklyJson.key?(horse.scheduled_date)
